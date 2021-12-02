@@ -9,7 +9,6 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import style from './style';
 
 import styles from './style';
 
@@ -34,10 +33,13 @@ import styles from './style';
 //   </View>
 // );
 
-function LandingPage() {
-  // const renderMonth = ({item}) => {
-  //   <itemMonth title={item.name} />;
-  // };
+function LandingPage(props) {
+  const toDetailMovie = () => {
+    props.navigation.navigate('DetailMovie');
+    // props.navigation.navigate('Register');
+  };
+
+  // const renderMonth = ({item}) => <itemMonth title={item.name} />;
   return (
     <ScrollView style={styles.wrapper}>
       <View>
@@ -120,7 +122,7 @@ function LandingPage() {
           <Text style={styles.textMonth}>January</Text>
         </View>
         <View style={styles.monthList}>
-          <Text style={styles.textMonth}>January</Text>
+          <Text style={styles.textMonth}>December</Text>
         </View>
       </ScrollView>
       <ScrollView horizontal style={styles.wrapperShowing}>
@@ -131,7 +133,7 @@ function LandingPage() {
           />
           <Text style={styles.titleUpComing}>Black Widow</Text>
           <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
-          <TouchableOpacity style={styles.btnDetail}>
+          <TouchableOpacity style={styles.btnDetail} onPress={toDetailMovie}>
             <Text style={styles.textDetail}>Details</Text>
           </TouchableOpacity>
         </View>
@@ -142,7 +144,7 @@ function LandingPage() {
           />
           <Text style={styles.titleUpComing}>Black Widow</Text>
           <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
-          <TouchableOpacity style={styles.btnDetail}>
+          <TouchableOpacity style={styles.btnDetail} onPress={toDetailMovie}>
             <Text style={styles.textDetail}>Details</Text>
           </TouchableOpacity>
         </View>
@@ -153,7 +155,7 @@ function LandingPage() {
           />
           <Text style={styles.titleUpComing}>Black Widow</Text>
           <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
-          <TouchableOpacity style={styles.btnDetail}>
+          <TouchableOpacity style={styles.btnDetail} onPress={toDetailMovie}>
             <Text style={styles.textDetail}>Details</Text>
           </TouchableOpacity>
         </View>

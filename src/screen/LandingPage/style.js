@@ -42,6 +42,7 @@ export default StyleSheet.create({
   },
   wrapperShowing: {
     flexDirection: 'row',
+    paddingVertical: 12,
   },
   cardShowing: {
     margin: 10,
@@ -71,8 +72,8 @@ export default StyleSheet.create({
   monthList: {
     marginHorizontal: 6,
     backgroundColor: 'white',
-    width: 127,
-    height: 42,
+    width: 100,
+    height: 32,
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',

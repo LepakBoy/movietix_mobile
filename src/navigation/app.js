@@ -7,6 +7,7 @@ const Drawer = createDrawerNavigator();
 
 import LandingPage from '../screen/LandingPage';
 import Profile from '../screen/Profile';
+import DetailMovie from '../screen/DetailMovie';
 
 import DrawerContent from '../components/DrawerContent';
 import Icon from 'react-native-vector-icons/Feather';
@@ -35,6 +36,18 @@ function ProfileNavigator() {
   );
 }
 
+function DetailMovieNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        component={DetailMovie}
+        name="DetailMovie"
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function AppNavigator() {
   return (
     <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
@@ -49,6 +62,7 @@ function AppNavigator() {
           ),
         }}
       />
+      <Drawer.Screen component={DetailMovieNavigator} name="DetailMovie" />
     </Drawer.Navigator>
   );
 }
