@@ -19,14 +19,14 @@ export default StyleSheet.create({
     borderRadius: 8,
   },
   movieBanner: {width: '100%', height: '100%', borderRadius: 8},
-  titelMovie: {marginTop: 22, fontSize: 24, fontWeight: '600'},
+  titelMovie: {marginTop: 36, fontSize: 24, fontWeight: '600'},
   genre: {
     fontSize: 16,
     fontWeight: '500',
     color: '#4E4B66',
   },
   detailMovie: {
-    marginTop: 22,
+    marginTop: 36,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -46,7 +46,7 @@ export default StyleSheet.create({
     fontWeight: '500',
   },
   synopsis: {
-    marginTop: 32,
+    marginTop: 48,
     height: 270,
   },
   synopsisTitle: {
@@ -57,23 +57,93 @@ export default StyleSheet.create({
   synopsisContent: {
     marginTop: 22,
     color: '#4E4B66',
-    fontSize: 15,
+    fontSize: 17,
   },
   setMenu: {
     height: 200,
   },
   btnSetDate: {
+    paddingLeft: 14,
     marginTop: 20,
     width: '100%',
     height: 46,
-    backgroundColor: 'red',
+    backgroundColor: '#F5F6F8',
     justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
+
+    // borderRadius: 8,
   },
   textSetDate: {
-    color: 'white',
     fontSize: 16,
     fontWeight: '600',
+  },
+  picker: {
+    marginTop: 18,
+    borderRadius: 8,
+    backgroundColor: '#F5F6F8',
+    color: 'white',
+  },
+  pickerItem: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  scheduleList: {
+    // height: 800,
+  },
+  headerSchedule: {
+    alignItems: 'center',
+  },
+  logoTeater: {
+    width: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardSchedule: {
+    marginVertical: 22,
+    paddingVertical: 36,
+    borderRadius: 6,
+    borderColor: '#DEDEDE',
+    borderWidth: 1,
+    padding: 12,
+    // backgroundColor: 'red',
+    width: '100%',
+    // height: 500,
+  },
+  address: {
+    marginTop: 18,
+    color: '#AAAAAA',
+    fontSize: 16,
+  },
+  listTime: {
+    marginTop: 36,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+  },
+  time: {
+    fontSize: 18,
+    marginHorizontal: 16,
+    marginVertical: 6,
+  },
+  priceList: {
+    paddingHorizontal: 16,
+    marginTop: 22,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  btnBook: {
+    marginTop: 48,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    backgroundColor: '#5F2EEA',
+    height: 52,
+    borderRadius: 8,
+  },
+  textBook: {
+    color: 'white',
+    fontWeight: '600',
+    fontSize: 18,
   },
 });

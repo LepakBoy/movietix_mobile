@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import s from './style';
 
@@ -12,10 +13,14 @@ import {
 } from 'react-native';
 
 import DatePicker from 'react-native-date-picker';
+import {Picker} from '@react-native-picker/picker';
 
 function DetailMovie() {
+  // state datePicker
   const [date, setDate] = useState(new Date(Date.now()));
   const [open, setOpen] = useState(false);
+  // state picker
+  const [selectedLanguage, setSelectedLanguage] = useState();
 
   return (
     <ScrollView style={s.wrapper}>
@@ -75,13 +80,96 @@ function DetailMovie() {
             setOpen(false);
           }}
         />
+
         <TouchableOpacity onPress={() => setOpen(true)} style={s.btnSetDate}>
           <Text style={s.textSetDate}>Set a date</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={s.btnSetDate}>
+
+        <View style={s.picker}>
+          <Picker
+            selectedValue={selectedLanguage}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedLanguage(itemValue)
+            }>
+            <Picker.Item style={s.pickerItem} label="Jakarta" value="jakarta" />
+            <Picker.Item label="Bogor" value="bogor" />
+          </Picker>
+        </View>
+
+        {/* <TouchableOpacity style={s.btnSetDate}>
           <Text style={s.textSetDate}>Set a city</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
+
+      {/* card schedule === looping */}
+      <View style={s.scheduleList}>
+        <View style={s.cardSchedule}>
+          <View style={s.headerSchedule}>
+            <Image source={require('../../assets/images/ebv.png')} />
+            <View>
+              <Text style={s.address}>
+                Whatever street No.12, South Purwokerto
+              </Text>
+            </View>
+            <View style={s.listTime}>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+            </View>
+            <View style={s.priceList}>
+              <Text style={{color: '#6B6B6B', fontSize: 22, fontWeight: '600'}}>
+                Price
+              </Text>
+              <Text style={{color: '#000000', fontSize: 22, fontWeight: '600'}}>
+                $10.00/seat
+              </Text>
+            </View>
+          </View>
+          <TouchableOpacity style={s.btnBook}>
+            <Text style={s.textBook}>Book now</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* ================================== */}
+
+      {/* card schedule === looping */}
+      <View style={s.scheduleList}>
+        <View style={s.cardSchedule}>
+          <View style={s.headerSchedule}>
+            <Image source={require('../../assets/images/ebv.png')} />
+            <View>
+              <Text style={s.address}>
+                Whatever street No.12, South Purwokerto
+              </Text>
+            </View>
+            <View style={s.listTime}>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+              <Text style={s.time}>08.00am</Text>
+            </View>
+            <View style={s.priceList}>
+              <Text style={{color: '#6B6B6B', fontSize: 20, fontWeight: '600'}}>
+                Price
+              </Text>
+              <Text style={{color: '#000000', fontSize: 20, fontWeight: '600'}}>
+                $10.00/seat
+              </Text>
+            </View>
+          </View>
+          <TouchableOpacity style={s.btnBook}>
+            <Text style={s.textBook}>Book now</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* ================================== */}
     </ScrollView>
   );
 }
