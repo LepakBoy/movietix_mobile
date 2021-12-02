@@ -11,12 +11,13 @@ export default StyleSheet.create({
     width: '100%',
   },
   imageHeader: {
-    width: 40,
-    height: 20,
+    width: 150,
+    // height: 60,
   },
   textHeader: {
     fontSize: 32,
     fontWeight: '600',
+    marginTop: 22,
   },
   formInput: {
     marginTop: 42,

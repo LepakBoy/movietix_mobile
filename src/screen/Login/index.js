@@ -17,7 +17,7 @@ function Login(props) {
     <View style={styles.container}>
       <View style={styles.header}>
         <Image
-          source={require('../../assets/images/Tickitz .png')}
+          source={require('../../assets/images/Tickitz.png')}
           style={styles.imageHeader}
         />
         <Text style={styles.textHeader}>Sign In</Text>
