@@ -47,7 +47,7 @@ export default StyleSheet.create({
   },
   synopsis: {
     marginTop: 32,
-    height: 600,
+    height: 270,
   },
   synopsisTitle: {
     color: '#14142B',
@@ -58,5 +58,22 @@ export default StyleSheet.create({
     marginTop: 22,
     color: '#4E4B66',
     fontSize: 15,
+  },
+  setMenu: {
+    height: 200,
+  },
+  btnSetDate: {
+    marginTop: 20,
+    width: '100%',
+    height: 46,
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+  },
+  textSetDate: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

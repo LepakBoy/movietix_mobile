@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import s from './style';
 
 import {
@@ -8,9 +8,15 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Button,
 } from 'react-native';
 
+import DatePicker from 'react-native-date-picker';
+
 function DetailMovie() {
+  const [date, setDate] = useState(new Date(Date.now()));
+  const [open, setOpen] = useState(false);
+
   return (
     <ScrollView style={s.wrapper}>
       <View style={s.detailHeader}>
@@ -54,6 +60,27 @@ function DetailMovie() {
             will be threatened.{' '}
           </Text>
         </View>
+      </View>
+      <View style={s.setMenu}>
+        <DatePicker
+          modal
+          mode="date"
+          open={open}
+          date={date}
+          onConfirm={date => {
+            setOpen(false);
+            setDate(date);
+          }}
+          onCancel={() => {
+            setOpen(false);
+          }}
+        />
+        <TouchableOpacity onPress={() => setOpen(true)} style={s.btnSetDate}>
+          <Text style={s.textSetDate}>Set a date</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={s.btnSetDate}>
+          <Text style={s.textSetDate}>Set a city</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
