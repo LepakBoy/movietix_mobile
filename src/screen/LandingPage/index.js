@@ -36,7 +36,6 @@ import styles from './style';
 function LandingPage(props) {
   const toDetailMovie = () => {
     props.navigation.navigate('DetailMovie');
-    // props.navigation.navigate('Register');
   };
 
   // const renderMonth = ({item}) => <itemMonth title={item.name} />;

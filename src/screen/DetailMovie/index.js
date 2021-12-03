@@ -15,7 +15,10 @@ import {
 import DatePicker from 'react-native-date-picker';
 import {Picker} from '@react-native-picker/picker';
 
-function DetailMovie() {
+function DetailMovie(props) {
+  const toOrder = () => {
+    props.navigation.navigate('Order');
+  };
   // state datePicker
   const [date, setDate] = useState(new Date(Date.now()));
   const [open, setOpen] = useState(false);
@@ -93,6 +96,12 @@ function DetailMovie() {
             }>
             <Picker.Item style={s.pickerItem} label="Jakarta" value="jakarta" />
             <Picker.Item label="Bogor" value="bogor" />
+            <Picker.Item label="Bandung" value="bandung" />
+            <Picker.Item label="Bogor" value="bogor" />
+            <Picker.Item label="Bandung" value="bandung" />
+            <Picker.Item label="Bogor" value="bogor" />
+            <Picker.Item label="Bandung" value="bandung" />
+            <Picker.Item label="Bogor" value="bogor" />
           </Picker>
         </View>
 
@@ -164,12 +173,17 @@ function DetailMovie() {
               </Text>
             </View>
           </View>
-          <TouchableOpacity style={s.btnBook}>
+          <TouchableOpacity onPress={toOrder} style={s.btnBook}>
             <Text style={s.textBook}>Book now</Text>
           </TouchableOpacity>
         </View>
       </View>
       {/* ================================== */}
+      <View style={{height: 200}}>
+        <View>
+          <Text>adfaada afafaaa</Text>
+        </View>
+      </View>
     </ScrollView>
   );
 }

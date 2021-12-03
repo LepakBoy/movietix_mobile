@@ -8,6 +8,8 @@ const Drawer = createDrawerNavigator();
 import LandingPage from '../screen/LandingPage';
 import Profile from '../screen/Profile';
 import DetailMovie from '../screen/DetailMovie';
+import Order from '../screen/Order';
+import Payment from '../screen/Payment';
 
 import DrawerContent from '../components/DrawerContent';
 import Icon from 'react-native-vector-icons/Feather';
@@ -48,6 +50,30 @@ function DetailMovieNavigator() {
   );
 }
 
+function OrderNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        component={Order}
+        name="Order"
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function PaymentNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        component={Payment}
+        name="Payment"
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+}
+
 function AppNavigator() {
   return (
     <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
@@ -63,6 +89,8 @@ function AppNavigator() {
         }}
       />
       <Drawer.Screen component={DetailMovieNavigator} name="DetailMovie" />
+      <Drawer.Screen component={OrderNavigator} name="Order" />
+      <Drawer.Screen component={PaymentNavigator} name="Payment" />
     </Drawer.Navigator>
   );
 }

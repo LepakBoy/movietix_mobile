@@ -105,7 +105,7 @@ export default StyleSheet.create({
     borderColor: '#DEDEDE',
     borderWidth: 1,
     padding: 12,
-    // backgroundColor: 'red',
+    backgroundColor: 'white',
     width: '100%',
     // height: 500,
   },
@@ -121,8 +121,9 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
   },
   time: {
-    fontSize: 18,
-    marginHorizontal: 16,
+    fontWeight: '500',
+    fontSize: 16,
+    marginHorizontal: 18,
     marginVertical: 6,
   },
   priceList: {
@@ -138,12 +139,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     backgroundColor: '#5F2EEA',
-    height: 52,
+    height: 42,
     borderRadius: 8,
   },
   textBook: {
     color: 'white',
     fontWeight: '600',
-    fontSize: 18,
+    fontSize: 16,
   },
 });
