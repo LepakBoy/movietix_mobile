@@ -31,7 +31,8 @@ export default StyleSheet.create({
   imageUser: {
     width: 100,
     height: 100,
-    // borderRadius: 100,
+    borderRadius: 50,
+    // overflow: 'hidden',
   },
   name: {
     marginTop: 22,

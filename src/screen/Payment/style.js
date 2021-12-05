@@ -2,10 +2,8 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
   wrapper: {
-    backgroundColor: 'white',
     paddingVertical: 28,
     paddingHorizontal: 12,
-    // height: 4000,
   },
   totalPayment: {
     paddingHorizontal: 12,

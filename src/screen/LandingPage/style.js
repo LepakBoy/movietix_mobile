@@ -4,7 +4,6 @@ export default StyleSheet.create({
   wrapper: {
     paddingVertical: 28,
     paddingHorizontal: 12,
-    backgroundColor: 'white',
   },
   textHeaderOne: {
     fontSize: 16,

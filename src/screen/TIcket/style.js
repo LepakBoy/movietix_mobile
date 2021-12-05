@@ -4,7 +4,6 @@ export default StyleSheet.create({
   wrapper: {
     paddingVertical: 28,
     paddingHorizontal: 24,
-    backgroundColor: 'white',
   },
   barcodeArea: {
     justifyContent: 'center',
@@ -52,7 +51,7 @@ export default StyleSheet.create({
   totalArea: {
     paddingVertical: 48,
     paddingHorizontal: 28,
-    // backgroundColor: 'red',
+
     height: 200,
   },
   totalWrapper: {
@@ -75,7 +74,6 @@ export default StyleSheet.create({
     marginTop: 48,
     width: '100%',
     height: 300,
-    // backgroundColor: 'red',
   },
   textGrey: {
     color: '#6E7191',

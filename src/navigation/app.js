@@ -11,7 +11,6 @@ import DetailMovie from '../screen/DetailMovie';
 import Order from '../screen/Order';
 import Payment from '../screen/Payment';
 import Ticket from '../screen/TIcket';
-import OrderHistory from '../screen/OrderHistory';
 
 import DrawerContent from '../components/DrawerContent';
 import Icon from 'react-native-vector-icons/Feather';
@@ -88,22 +87,14 @@ function TicketNavigator() {
   );
 }
 
-function OrderHistoryNavigator() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        component={OrderHistory}
-        name="OrderHistory"
-        options={{headerShown: false}}
-      />
-    </Stack.Navigator>
-  );
-}
-
 function AppNavigator() {
   return (
     <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
-      <Drawer.Screen component={HomeNavigator} name="HomeNavigator" />
+      <Drawer.Screen
+        component={HomeNavigator}
+        name="HomeNavigator"
+        options={{title: 'Home'}}
+      />
       <Drawer.Screen
         component={ProfileNavigator}
         name="ProfileNavigator"
@@ -118,7 +109,6 @@ function AppNavigator() {
       <Drawer.Screen component={OrderNavigator} name="Order" />
       <Drawer.Screen component={PaymentNavigator} name="Payment" />
       <Drawer.Screen component={TicketNavigator} name="Ticket" />
-      <Drawer.Screen component={OrderHistoryNavigator} name="OrderHistory" />
     </Drawer.Navigator>
   );
 }
