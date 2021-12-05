@@ -65,7 +65,7 @@ function Payment() {
             </Text>
           </View>
         </View>
-        <Text style={s.label}>Personal Info</Text>
+        <Text style={[s.label, {marginTop: 62}]}>Personal Info</Text>
         <View style={s.personalContent}>
           <Text style={s.labelPersonal}>Full Name</Text>
           <TextInput

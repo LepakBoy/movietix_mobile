@@ -5,8 +5,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     paddingVertical: 28,
     paddingHorizontal: 12,
-    // backgroundColor: 'blue',
-    height: 4000,
+    // height: 4000,
   },
   totalPayment: {
     paddingHorizontal: 12,
@@ -62,13 +61,14 @@ export default StyleSheet.create({
   imgCard: {
     resizeMode: 'stretch',
     // width: '90%',
-    height: 22,
+    // width: 42,
   },
   or: {
     marginTop: 16,
     textAlign: 'center',
   },
   personalContent: {
+    marginTop: 22,
     padding: 22,
     backgroundColor: 'white',
     borderRadius: 8,
@@ -119,7 +119,7 @@ export default StyleSheet.create({
     fontWeight: '500',
   },
   footer: {
-    marginTop: 28,
+    marginTop: 48,
     width: '100%',
     height: 400,
     backgroundColor: 'white',
@@ -139,7 +139,8 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
   },
   logo: {
-    height: 24,
+    marginTop: 8,
+    width: 72,
     resizeMode: 'stretch',
   },
 });
