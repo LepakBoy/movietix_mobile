@@ -116,6 +116,8 @@ export default StyleSheet.create({
     marginTop: 18,
     backgroundColor: 'white',
     borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#DEDEDE',
   },
   btnJoin: {
     width: '100%',

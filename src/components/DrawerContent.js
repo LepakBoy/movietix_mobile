@@ -6,6 +6,8 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 
+import {useSelector} from 'react-redux';
+
 import Icon from 'react-native-vector-icons/Feather';
 
 class DrawerContent extends React.Component {

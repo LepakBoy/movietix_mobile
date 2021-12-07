@@ -7,39 +7,55 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  FlatList,
 } from 'react-native';
+import {useEffect, useState} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 
 import styles from './style';
 
 import Footer from '../../components/Footer';
+import axios from '../../utils/axios';
 
-// const MONTH = [
-//   {name: 'January'},
-//   {name: 'February'},
-//   {name: 'March'},
-//   {name: 'April'},
-//   {name: 'May'},
-//   {name: 'June'},
-//   {name: 'July'},
-//   {name: 'August'},
-//   {name: 'September'},
-//   {name: 'October'},
-//   {name: 'November'},
-//   {name: 'Desember'},
-// ];
-
-// const itemMonth = ({name}) => (
-//   <View style={styles.monthList}>
-//     <Text style={styles.textMonth}>{name}</Text>
-//   </View>
-// );
+const MONTH = [
+  {name: 'January'},
+  {name: 'February'},
+  {name: 'March'},
+  {name: 'April'},
+  {name: 'May'},
+  {name: 'June'},
+  {name: 'July'},
+  {name: 'August'},
+  {name: 'September'},
+  {name: 'October'},
+  {name: 'November'},
+  {name: 'Desember'},
+];
 
 function LandingPage(props) {
+  const [movies, setMovies] = useState([]);
+  const user = useSelector(state => state.user.user);
+
   const toDetailMovie = () => {
     props.navigation.navigate('DetailMovie');
   };
 
-  // const renderMonth = ({item}) => <itemMonth title={item.name} />;
+  async function getMovie() {
+    try {
+      const res = await axios.get('/movie/all');
+      setMovies(res.data.data);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getMovie();
+  }, []);
+
+  console.log(movies, 'stateeeeee');
+
   return (
     <ScrollView>
       <View style={styles.wrapper}>
@@ -61,111 +77,107 @@ function LandingPage(props) {
             <Text style={styles.textViewAll}>view all</Text>
           </View>
         </View>
-        <ScrollView horizontal style={styles.wrapperShowing}>
-          <View style={styles.cardShowing}>
-            <Image
-              style={styles.imageShowing}
-              source={require('../../assets/images/lacasa.jpg')}
-            />
-          </View>
-          <View style={styles.cardShowing}>
-            <Image
-              style={styles.imageShowing}
-              source={require('../../assets/images/lacasa.jpg')}
-            />
-          </View>
-          <View style={styles.cardShowing}>
-            <Image
-              style={styles.imageShowing}
-              source={require('../../assets/images/lacasa.jpg')}
-            />
-          </View>
-        </ScrollView>
+        <FlatList
+          horizontal
+          data={movies}
+          renderItem={({item}) => (
+            <View style={styles.cardUpComing}>
+              <Image
+                style={styles.imageShowing}
+                source={
+                  item.image
+                    ? {
+                        uri: `http://192.168.100.4:3000/uploads/movie/${item.image}`,
+                      }
+                    : require('../../assets/images/mv3.jpg')
+                }
+              />
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={styles.titleUpComing}>
+                {item.movie_name}
+              </Text>
+              <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
+              <TouchableOpacity
+                style={styles.btnDetail}
+                onPress={toDetailMovie}>
+                <Text style={styles.textDetail}>Details</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          keyExtractor={item => item.id}
+        />
+        {/* <FlatList
+          horizontal
+          keyExtractor={item => item.id}
+          data={movies}
+          renderItem={({item}) => (
+            <View style={styles.cardShowing}>
+              <Image
+                style={styles.imageShowing}
+                source={
+                  item.image
+                    ? {
+                        uri: `http://192.168.100.4:3000/uploads/movie/${item.image}`,
+                      }
+                    : require('../../assets/images/default.jpg')
+                }
+              />
+            </View>
+          )}
+        /> */}
         <View>
           <View style={styles.showingHeader}>
             <Text style={styles.textShowing}>Upcoming Movies</Text>
             <Text style={styles.textViewAll}>view all</Text>
           </View>
         </View>
-        {/* month list */}
-        {/* <FlatList
-        data={MONTH}
-        renderItem={renderMonth}
-        keyExtractor={item => item.index}
-      /> */}
-        <ScrollView horizontal style={{padding: 8}}>
-          <View style={styles.monthList}>
-            <Text style={styles.textMonth}>January</Text>
-          </View>
-          <View style={styles.monthList}>
-            <Text style={styles.textMonth}>January</Text>
-          </View>
-          <View style={styles.monthList}>
-            <Text style={styles.textMonth}>January</Text>
-          </View>
-          <View style={styles.monthList}>
-            <Text style={styles.textMonth}>January</Text>
-          </View>
-          <View style={styles.monthList}>
-            <Text style={styles.textMonth}>January</Text>
-          </View>
-          <View style={styles.monthList}>
-            <Text style={styles.textMonth}>January</Text>
-          </View>
-          <View style={styles.monthList}>
-            <Text style={styles.textMonth}>January</Text>
-          </View>
-          <View style={styles.monthList}>
-            <Text style={styles.textMonth}>January</Text>
-          </View>
-          <View style={styles.monthList}>
-            <Text style={styles.textMonth}>January</Text>
-          </View>
-          <View style={styles.monthList}>
-            <Text style={styles.textMonth}>January</Text>
-          </View>
-          <View style={styles.monthList}>
-            <Text style={styles.textMonth}>December</Text>
-          </View>
-        </ScrollView>
-        <ScrollView horizontal style={styles.wrapperShowing}>
-          <View style={styles.cardUpComing}>
-            <Image
-              style={styles.imageShowing}
-              source={require('../../assets/images/mv2.jpg')}
-            />
-            <Text style={styles.titleUpComing}>Black Widow</Text>
-            <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
-            <TouchableOpacity style={styles.btnDetail} onPress={toDetailMovie}>
-              <Text style={styles.textDetail}>Details</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.cardUpComing}>
-            <Image
-              style={styles.imageShowing}
-              source={require('../../assets/images/mv2.jpg')}
-            />
-            <Text style={styles.titleUpComing}>Black Widow</Text>
-            <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
-            <TouchableOpacity style={styles.btnDetail} onPress={toDetailMovie}>
-              <Text style={styles.textDetail}>Details</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.cardUpComing}>
-            <Image
-              style={styles.imageShowing}
-              source={require('../../assets/images/mv2.jpg')}
-            />
-            <Text style={styles.titleUpComing}>Black Widow</Text>
-            <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
-            <TouchableOpacity style={styles.btnDetail} onPress={toDetailMovie}>
-              <Text style={styles.textDetail}>Details</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+
+        <FlatList
+          horizontal
+          data={MONTH}
+          renderItem={({item}) => (
+            <View style={styles.monthList}>
+              <Text style={styles.textMonth}>{item.name}</Text>
+            </View>
+          )}
+        />
+
+        <FlatList
+          horizontal
+          data={movies}
+          renderItem={({item}) => (
+            <View style={styles.cardUpComing}>
+              <Image
+                style={styles.imageShowing}
+                source={
+                  item.image
+                    ? {
+                        uri: `http://192.168.100.4:3000/uploads/movie/${item.image}`,
+                      }
+                    : require('../../assets/images/mv3.jpg')
+                }
+              />
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={styles.titleUpComing}>
+                {item.movie_name}
+              </Text>
+              <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
+              <TouchableOpacity
+                style={styles.btnDetail}
+                onPress={toDetailMovie}>
+                <Text style={styles.textDetail}>Details</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+          keyExtractor={item => item.id}
+        />
         <View
           style={{
-            height: 500,
+            height: 400,
             backgroundColor: 'white',
             borderRadius: 8,
             marginTop: 42,
@@ -185,7 +197,7 @@ function LandingPage(props) {
               Moviegoers
             </Text>
           </View>
-          <View style={{alignItems: 'center'}}>
+          <View style={{alignItems: 'center', paddingHorizontal: 12}}>
             <TextInput style={styles.inputText} placeholder="Type your email" />
             <TouchableOpacity style={styles.btnJoin}>
               <Text style={styles.textjoin}>join now</Text>

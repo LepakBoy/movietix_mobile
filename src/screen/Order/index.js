@@ -1,15 +1,7 @@
 import React, {useState} from 'react';
 import s from './style';
 
-import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  Button,
-} from 'react-native';
+import {ScrollView, View, Text, TouchableOpacity, Image} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 import Footer from '../../components/Footer';
