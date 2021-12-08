@@ -26,15 +26,15 @@ function DetailMovie(props) {
 
   const [movie, setMovie] = useState([]);
   const [scheduleList, setScheduleList] = useState([]);
+  const [releaseDate, setReleaseDate] = useState('');
 
-  console.log(scheduleList, 'jadwal');
-
-  // const releaseDate = movie.releaseDate.split('T')[0];
+  // console.log(scheduleList, 'jadwal');
 
   const getMovie = async id => {
     try {
       const res = await axios.get(`/movie/${id}`);
       setMovie(res.data.data[0]);
+      setReleaseDate(res.data.data[0].releaseDate.split('T')[0]);
     } catch (err) {
       console.log(err);
     }
@@ -83,7 +83,7 @@ function DetailMovie(props) {
         <View style={s.detailMovie}>
           <View style={s.detailLeft}>
             <Text style={s.detailInfo}>Release Date</Text>
-            <Text style={s.detailValue}>{movie.releaseDate}</Text>
+            <Text style={s.detailValue}>{releaseDate}</Text>
             <Text style={[s.detailInfo, {marginTop: 16}]}>Duration</Text>
             <Text style={s.detailValue}>{movie.duration}</Text>
           </View>
@@ -168,16 +168,16 @@ function DetailMovie(props) {
                       <Text style={s.address}>{item.location}</Text>
                     </View>
                     <View style={s.listTime}>
-                      {/* {
-                        <FlatList
-                          style={s.listTime}
-                          data={item.time_schedule}
-                          renderItem={({list}) => (
-                            <Text style={s.time}>{item.time_schedule}</Text>
-                          )}
-                          keyExtractor={item => item.id_schedule}
-                        />
-                      } */}
+                      {
+                        // <FlatList
+                        //   style={s.listTime}
+                        //   data={item.time_schedule}
+                        //   renderItem={({list}) => (
+                        //     <Text style={s.time}>{list}</Text>
+                        //   )}
+                        //   keyExtractor={item => item.id_schedule}
+                        // />
+                      }
 
                       <Text style={s.time}>08.00am</Text>
                       <Text style={s.time}>08.00am</Text>

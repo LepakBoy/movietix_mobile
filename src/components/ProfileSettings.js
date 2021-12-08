@@ -9,12 +9,18 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  Button,
 } from 'react-native';
 
 import Footer from './Footer';
+import {useSelector} from 'react-redux';
 
 function ProfileSettings(props) {
+  const user = useSelector(state => state.user.user);
+
+  const fullName = `${user.first_name} ${user.last_name}`;
+
+  console.log(user, 'data');
+
   return (
     <ScrollView>
       <View style={s.wrapper}>
@@ -23,10 +29,15 @@ function ProfileSettings(props) {
           <View style={s.imageArea}>
             <Image
               style={s.imageUser}
-              source={require('../assets/images/patrick.jpg')}
+              source={
+                user.image
+                  ? `http://192.168.100.4:3000/uploads/movie/${user.image}`
+                  : require('../assets/images/default.jpg')
+              }
+              // source={require('../assets/images/patrick.jpg')}
             />
           </View>
-          <Text style={s.name}>Jonas El Rodriguez</Text>
+          <Text style={s.name}>{fullName}</Text>
         </View>
         <Text style={[s.lable, {marginTop: 22}]}>Account Settings</Text>
         <View style={s.accountSetting}>
@@ -35,20 +46,15 @@ function ProfileSettings(props) {
           <TextInput
             style={s.input}
             placeholder="Enter your name"
-            defaultValue="Jonas El Rodriguez"
+            defaultValue={fullName}
           />
           <Text style={[s.lableContent, {marginTop: 28}]}>Email</Text>
           <TextInput
             style={s.input}
             placeholder="Enter your email"
-            defaultValue="Jonas@mail.com"
+            defaultValue={user.email}
           />
-          <Text style={[s.lableContent, {marginTop: 28}]}>Phone Number</Text>
-          <TextInput
-            style={s.input}
-            placeholder="Enter your phone number"
-            defaultValue="123456665"
-          />
+
           <Text style={[s.lableContent, {marginTop: 48}]}>
             Account and Privacy
           </Text>

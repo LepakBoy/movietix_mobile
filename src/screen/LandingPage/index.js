@@ -10,7 +10,7 @@ import {
   FlatList,
 } from 'react-native';
 import {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+// import {useSelector, useDispatch} from 'react-redux';
 
 import styles from './style';
 
@@ -34,7 +34,6 @@ const MONTH = [
 
 function LandingPage(props) {
   const [movies, setMovies] = useState([]);
-  const user = useSelector(state => state.user.user);
 
   const toDetailMovie = id => {
     props.navigation.navigate('DetailMovieNavigator', {
