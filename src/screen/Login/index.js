@@ -1,7 +1,7 @@
 import axios from '../../utils/axios';
 import React, {useState} from 'react';
 import {View, Text, TextInput, Image, TouchableOpacity} from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {user} from '../../stores/action/user';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,18 +15,12 @@ function Login(props) {
   const [form, setForm] = useState({email: '', password: ''});
   const [disable, setDisable] = useState(true);
 
-  // if (form.email !== '' && form.password !== '') {
-  //   setDisable(false);
-  // }
-
   const handleChangeText = (text, name) => {
     setForm({...form, [name]: text});
   };
 
   const handleLogin = async () => {
     try {
-      // props.navigation.navigate('AppScreen', {screen: 'LandingPage'});
-      // props.navigation.navigate('Register');
       const result = await axios.post('/auth/login', form);
       await AsyncStorage.setItem('token', result.data.data.token);
       await AsyncStorage.setItem('refreshToken', result.data.data.refreshToken);

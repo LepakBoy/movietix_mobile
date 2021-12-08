@@ -37,7 +37,7 @@ function LandingPage(props) {
   const user = useSelector(state => state.user.user);
 
   const toDetailMovie = id => {
-    props.navigation.navigate('AppScreen', {
+    props.navigation.navigate('DetailMovieNavigator', {
       screen: 'DetailMovie',
       params: {idMovie: id},
     });
@@ -47,7 +47,6 @@ function LandingPage(props) {
     try {
       const res = await axios.get('/movie/all');
       setMovies(res.data.data);
-      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -56,8 +55,6 @@ function LandingPage(props) {
   useEffect(() => {
     getMovie();
   }, []);
-
-  console.log(movies, 'stateeeeee');
 
   return (
     <ScrollView>
@@ -145,7 +142,7 @@ function LandingPage(props) {
               <Text style={styles.textMonth}>{item.name}</Text>
             </View>
           )}
-          keyExtractor={item => item.index}
+          keyExtractor={item => item.name}
         />
 
         <FlatList

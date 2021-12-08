@@ -8,9 +8,19 @@ import {
 
 import {useSelector} from 'react-redux';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import Icon from 'react-native-vector-icons/Feather';
 
 class DrawerContent extends React.Component {
+  // getToken = async () => {
+  //   try {
+  //     const token = await AsyncStorage.getItem('token');
+  //     console.log('tokennnnnnn');
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   render() {
     return (
       <View style={styles.container}>

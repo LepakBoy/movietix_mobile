@@ -23,6 +23,7 @@ function HomeNavigator() {
         name="LandingPage"
         options={{headerShown: false}}
       />
+      {/* <Stack.Screen component={}/> */}
     </Stack.Navigator>
   );
 }
@@ -105,7 +106,10 @@ function AppNavigator() {
           ),
         }}
       />
-      <Drawer.Screen component={DetailMovieNavigator} name="DetailMovie" />
+      <Drawer.Screen
+        component={DetailMovieNavigator}
+        name="DetailMovieNavigator"
+      />
       <Drawer.Screen component={OrderNavigator} name="Order" />
       <Drawer.Screen component={PaymentNavigator} name="Payment" />
       <Drawer.Screen component={TicketNavigator} name="Ticket" />

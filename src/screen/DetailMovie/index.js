@@ -8,28 +8,58 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  TextInput,
-  Button,
+  FlatList,
 } from 'react-native';
 
 import Footer from '../../components/Footer';
 
 import DatePicker from 'react-native-date-picker';
 import {Picker} from '@react-native-picker/picker';
+import axios from '../../utils/axios';
 
 function DetailMovie(props) {
-  // const id = props.route;
-
-  console.log(props.route.params.idMovie, 'idmovieeee');
-
-  const toOrder = () => {
-    props.navigation.navigate('Order');
-  };
-  // state datePicker
+  //state DatePicker
   const [date, setDate] = useState(new Date(Date.now()));
   const [open, setOpen] = useState(false);
   // state picker
   const [selectedLanguage, setSelectedLanguage] = useState();
+
+  const [movie, setMovie] = useState([]);
+  const [scheduleList, setScheduleList] = useState([]);
+
+  console.log(scheduleList, 'jadwal');
+
+  // const releaseDate = movie.releaseDate.split('T')[0];
+
+  const getMovie = async id => {
+    try {
+      const res = await axios.get(`/movie/${id}`);
+      setMovie(res.data.data[0]);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getSchedule = async (page, limit, location, sort, movie_id) => {
+    try {
+      const schedule = await axios.get(
+        `/schedule/all?page=${page}&limit=${limit}&location=${location}&sort=${sort}&movie_id=${movie_id}`,
+      );
+      setScheduleList(schedule.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getMovie(props.route.params.idMovie);
+    getSchedule(1, 3, '', 'DESC', props.route.params.idMovie);
+  }, [props.route.params]);
+
+  // const toOrder = () => {
+  //   props.navigation.navigate('Order');
+  // };
+  // state datePicker
 
   return (
     <ScrollView>
@@ -38,26 +68,30 @@ function DetailMovie(props) {
           <View style={s.cardBanner}>
             <Image
               style={s.movieBanner}
-              source={require('../../assets/images/mv2.jpg')}
+              source={
+                movie.image
+                  ? {
+                      uri: `http://192.168.100.4:3000/uploads/movie/${movie.image}`,
+                    }
+                  : require('../../assets/images/default.jpg')
+              }
             />
           </View>
-          <Text style={s.titelMovie}>Spider-Man Homecoming</Text>
-          <Text style={s.genre}>Adventure, Action, Sci-Fi</Text>
+          <Text style={s.titelMovie}>{movie.movie_name}</Text>
+          <Text style={s.genre}>{movie.category}</Text>
         </View>
         <View style={s.detailMovie}>
           <View style={s.detailLeft}>
             <Text style={s.detailInfo}>Release Date</Text>
-            <Text style={s.detailValue}>June 28, 2017</Text>
+            <Text style={s.detailValue}>{movie.releaseDate}</Text>
             <Text style={[s.detailInfo, {marginTop: 16}]}>Duration</Text>
-            <Text style={s.detailValue}>2 hrs 13 min</Text>
+            <Text style={s.detailValue}>{movie.duration}</Text>
           </View>
           <View style={s.detailRight}>
             <Text style={s.detailInfo}>Directed by</Text>
-            <Text style={s.detailValue}>Jon Watss</Text>
+            <Text style={s.detailValue}>{movie.director}</Text>
             <Text style={[s.detailInfo, {marginTop: 16}]}>Casts</Text>
-            <Text style={s.detailValue}>
-              Tom Holland, Robert Downey Jr., etc.
-            </Text>
+            <Text style={s.detailValue}>{movie.cast}</Text>
           </View>
         </View>
         <View style={s.synopsis}>
@@ -65,15 +99,7 @@ function DetailMovie(props) {
             <Text style={s.synopsisTitle}>Synopsis</Text>
           </View>
           <View>
-            <Text style={s.synopsisContent}>
-              Thrilled by his experience with the Avengers, Peter returns home,
-              where he lives with his Aunt May, under the watchful eye of his
-              new mentor Tony Stark, Peter tries to fall back into his normal
-              daily routine - distracted by thoughts of proving himself to be
-              more than just your friendly neighborhood Spider-Man - but when
-              the Vulture emerges as a new villain, everything that Peter holds
-              most important will be threatened.{' '}
-            </Text>
+            <Text style={s.synopsisContent}>{movie.synopsis}</Text>
           </View>
         </View>
         <View style={s.setMenu}>
@@ -122,77 +148,74 @@ function DetailMovie(props) {
         </View>
 
         {/* card schedule === looping */}
-        <View style={s.scheduleList}>
-          <View style={s.cardSchedule}>
-            <View style={s.headerSchedule}>
-              <Image source={require('../../assets/images/ebv.png')} />
-              <View>
-                <Text style={s.address}>
-                  Whatever street No.12, South Purwokerto
-                </Text>
-              </View>
-              <View style={s.listTime}>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-              </View>
-              <View style={s.priceList}>
-                <Text
-                  style={{color: '#6B6B6B', fontSize: 22, fontWeight: '600'}}>
-                  Price
-                </Text>
-                <Text
-                  style={{color: '#000000', fontSize: 22, fontWeight: '600'}}>
-                  $10.00/seat
-                </Text>
-              </View>
-            </View>
-            <TouchableOpacity style={s.btnBook}>
-              <Text style={s.textBook}>Book now</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        {/* ================================== */}
+        {scheduleList.length > 0 ? (
+          <FlatList
+            data={scheduleList}
+            renderItem={({item}) => (
+              <View style={s.scheduleList}>
+                <View style={s.cardSchedule}>
+                  <View style={s.headerSchedule}>
+                    <Image
+                      source={
+                        item.teater_name === 'hiflix'
+                          ? require('../../assets/images/hiflix.png')
+                          : item.teater_name === 'cinepolis'
+                          ? require('../../assets/images/cineone.png')
+                          : require('../../assets/images/ebv.png')
+                      }
+                    />
+                    <View>
+                      <Text style={s.address}>{item.location}</Text>
+                    </View>
+                    <View style={s.listTime}>
+                      {/* {
+                        <FlatList
+                          style={s.listTime}
+                          data={item.time_schedule}
+                          renderItem={({list}) => (
+                            <Text style={s.time}>{item.time_schedule}</Text>
+                          )}
+                          keyExtractor={item => item.id_schedule}
+                        />
+                      } */}
 
-        {/* card schedule === looping */}
-        <View style={s.scheduleList}>
-          <View style={s.cardSchedule}>
-            <View style={s.headerSchedule}>
-              <Image source={require('../../assets/images/ebv.png')} />
-              <View>
-                <Text style={s.address}>
-                  Whatever street No.12, South Purwokerto
-                </Text>
+                      <Text style={s.time}>08.00am</Text>
+                      <Text style={s.time}>08.00am</Text>
+                      <Text style={s.time}>08.00am</Text>
+                      <Text style={s.time}>08.00am</Text>
+                      <Text style={s.time}>08.00am</Text>
+                    </View>
+                    <View style={s.priceList}>
+                      <Text
+                        style={{
+                          color: '#6B6B6B',
+                          fontSize: 22,
+                          fontWeight: '600',
+                        }}>
+                        Price
+                      </Text>
+                      <Text
+                        style={{
+                          color: '#000000',
+                          fontSize: 22,
+                          fontWeight: '600',
+                        }}>
+                        $10.00/seat
+                      </Text>
+                    </View>
+                  </View>
+                  <TouchableOpacity style={s.btnBook}>
+                    <Text style={s.textBook}>Book now</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={s.listTime}>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-                <Text style={s.time}>08.00am</Text>
-              </View>
-              <View style={s.priceList}>
-                <Text
-                  style={{color: '#6B6B6B', fontSize: 20, fontWeight: '600'}}>
-                  Price
-                </Text>
-                <Text
-                  style={{color: '#000000', fontSize: 20, fontWeight: '600'}}>
-                  $10.00/seat
-                </Text>
-              </View>
-            </View>
-            <TouchableOpacity onPress={toOrder} style={s.btnBook}>
-              <Text style={s.textBook}>Book now</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+            )}
+            keyExtractor={item => item.id_schedule}
+          />
+        ) : (
+          <Text>no data</Text>
+        )}
+
         {/* ================================== */}
       </View>
       <Footer />
