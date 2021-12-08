@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import s from './style';
 
 import {
@@ -18,6 +18,10 @@ import DatePicker from 'react-native-date-picker';
 import {Picker} from '@react-native-picker/picker';
 
 function DetailMovie(props) {
+  // const id = props.route;
+
+  console.log(props.route.params.idMovie, 'idmovieeee');
+
   const toOrder = () => {
     props.navigation.navigate('Order');
   };

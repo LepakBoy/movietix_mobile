@@ -36,8 +36,11 @@ function LandingPage(props) {
   const [movies, setMovies] = useState([]);
   const user = useSelector(state => state.user.user);
 
-  const toDetailMovie = () => {
-    props.navigation.navigate('DetailMovie');
+  const toDetailMovie = id => {
+    props.navigation.navigate('AppScreen', {
+      screen: 'DetailMovie',
+      params: {idMovie: id},
+    });
   };
 
   async function getMovie() {
@@ -81,7 +84,7 @@ function LandingPage(props) {
           horizontal
           data={movies}
           renderItem={({item}) => (
-            <View style={styles.cardUpComing}>
+            <View style={styles.cardShowing}>
               <Image
                 style={styles.imageShowing}
                 source={
@@ -101,7 +104,7 @@ function LandingPage(props) {
               <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
               <TouchableOpacity
                 style={styles.btnDetail}
-                onPress={toDetailMovie}>
+                onPress={() => toDetailMovie(item.id_movie)}>
                 <Text style={styles.textDetail}>Details</Text>
               </TouchableOpacity>
             </View>
@@ -142,6 +145,7 @@ function LandingPage(props) {
               <Text style={styles.textMonth}>{item.name}</Text>
             </View>
           )}
+          keyExtractor={item => item.index}
         />
 
         <FlatList
@@ -166,11 +170,11 @@ function LandingPage(props) {
                 {item.movie_name}
               </Text>
               <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={styles.btnDetail}
                 onPress={toDetailMovie}>
                 <Text style={styles.textDetail}>Details</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           )}
           keyExtractor={item => item.id}

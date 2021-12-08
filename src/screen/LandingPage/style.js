@@ -51,7 +51,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     width: 154,
-    height: 217,
+    height: 317,
     backgroundColor: 'white',
   },
   cardUpComing: {
@@ -61,7 +61,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     width: 154,
-    height: 317,
+    height: 277,
     backgroundColor: 'white',
   },
   imageShowing: {
@@ -70,6 +70,7 @@ export default StyleSheet.create({
     height: 185,
   },
   monthList: {
+    marginVertical: 20,
     marginHorizontal: 6,
     backgroundColor: 'white',
     width: 100,
