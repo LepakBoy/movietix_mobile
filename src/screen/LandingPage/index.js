@@ -43,7 +43,8 @@ function LandingPage(props) {
 
   async function getMovie() {
     try {
-      const res = await axios.get('/movie/all');
+      const date = new Date().toISOString().split('-')[1];
+      const res = await axios.get(`/movie/all?filter=${date}`);
       setMovies(res.data.data);
     } catch (err) {
       console.log(err);

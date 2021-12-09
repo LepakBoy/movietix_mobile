@@ -37,6 +37,7 @@ class DrawerContent extends React.Component {
     }
     alert('Logged out');
   };
+
   render() {
     return (
       <View style={styles.container}>

@@ -6,9 +6,9 @@ function SplashScreen(props) {
   const getTokens = async () => {
     try {
       const tokens = await AsyncStorage.getItem('token');
-      console.log(tokens, 'token');
 
       setTimeout(() => {
+        // props.navigation.navigate('AppScreen');
         if (tokens) {
           props.navigation.navigate('AppScreen');
         } else {

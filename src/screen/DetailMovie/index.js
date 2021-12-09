@@ -23,11 +23,15 @@ function DetailMovie(props) {
     price: 0,
   });
 
+  console.log(typeof date);
+
   const getMovie = async id => {
     try {
       const res = await axios.get(`/movie/${id}`);
       setMovie(res.data.data[0]);
-      setReleaseDate(res.data.data[0].releaseDate.split('T')[0]);
+      setReleaseDate(
+        res.data.data[0].releaseDate.split('T')[0].split('-').join('/'),
+      );
     } catch (err) {
       console.log(err);
     }

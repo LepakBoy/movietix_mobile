@@ -53,7 +53,7 @@ function Login(props) {
         {/* input password */}
         <Text style={[styles.labelInput, {marginTop: 12}]}>Password</Text>
         <TextInput
-          securityTextEntry={true}
+          secureTextEntry={true}
           style={styles.textInput}
           placeholder="Type your password"
           onChangeText={text => handleChangeText(text, 'password')}
