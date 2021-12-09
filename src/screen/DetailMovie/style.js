@@ -125,6 +125,7 @@ export default StyleSheet.create({
     fontSize: 16,
     marginHorizontal: 18,
     marginVertical: 6,
+    color: 'black',
   },
   priceList: {
     paddingHorizontal: 16,

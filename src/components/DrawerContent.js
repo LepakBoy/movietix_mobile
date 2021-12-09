@@ -9,10 +9,15 @@ import {
 import {useSelector} from 'react-redux';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from '../utils/axios';
 
 import Icon from 'react-native-vector-icons/Feather';
 
 class DrawerContent extends React.Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
   // getToken = async () => {
   //   try {
   //     const token = await AsyncStorage.getItem('token');
@@ -21,6 +26,17 @@ class DrawerContent extends React.Component {
   //     console.log(err);
   //   }
   // };
+
+  handleLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('token');
+      await axios.post('/auth/logout');
+      this.props.navigation.navigate('AuthScreen', {screen: 'Login'});
+    } catch (err) {
+      console.log(err);
+    }
+    alert('Logged out');
+  };
   render() {
     return (
       <View style={styles.container}>
@@ -37,10 +53,10 @@ class DrawerContent extends React.Component {
         <View style={styles.containerSection}>
           <DrawerItem
             label="Sign Out"
-            icon={({color, size}) => (
-              <Icon color={color} size={size} name="log-out" />
-            )}
-            onPress={() => alert('Logged out')}
+            // icon={({color, size}) => (
+            //   <Icon color={color} size={size} name="log-out" />
+            // )}
+            onPress={this.handleLogout}
           />
         </View>
       </View>

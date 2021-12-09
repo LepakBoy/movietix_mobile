@@ -19,8 +19,6 @@ function ProfileSettings(props) {
 
   const fullName = `${user.first_name} ${user.last_name}`;
 
-  console.log(user, 'data');
-
   return (
     <ScrollView>
       <View style={s.wrapper}>
@@ -34,7 +32,6 @@ function ProfileSettings(props) {
                   ? `http://192.168.100.4:3000/uploads/movie/${user.image}`
                   : require('../assets/images/default.jpg')
               }
-              // source={require('../assets/images/patrick.jpg')}
             />
           </View>
           <Text style={s.name}>{fullName}</Text>
@@ -42,11 +39,17 @@ function ProfileSettings(props) {
         <Text style={[s.lable, {marginTop: 22}]}>Account Settings</Text>
         <View style={s.accountSetting}>
           <Text style={s.lableContent}>Details Information</Text>
-          <Text style={[s.lableContent, {marginTop: 28}]}>Full Name</Text>
+          <Text style={[s.lableContent, {marginTop: 28}]}>First Name</Text>
           <TextInput
             style={s.input}
-            placeholder="Enter your name"
-            defaultValue={fullName}
+            placeholder="Enter your first name"
+            defaultValue={user.first_name}
+          />
+          <Text style={[s.lableContent, {marginTop: 28}]}>Last Name</Text>
+          <TextInput
+            style={s.input}
+            placeholder="Enter your last name"
+            defaultValue={user.last_name}
           />
           <Text style={[s.lableContent, {marginTop: 28}]}>Email</Text>
           <TextInput
@@ -54,8 +57,13 @@ function ProfileSettings(props) {
             placeholder="Enter your email"
             defaultValue={user.email}
           />
+          <TouchableOpacity style={s.btnChanges}>
+            <Text style={s.textBtn}>Save Changes</Text>
+          </TouchableOpacity>
+        </View>
 
-          <Text style={[s.lableContent, {marginTop: 48}]}>
+        <View style={s.passwordSetting}>
+          <Text style={[s.lableContent, {marginTop: 18}]}>
             Account and Privacy
           </Text>
           <Text style={[s.lableContent, {marginTop: 28}]}>New Password</Text>
@@ -72,8 +80,6 @@ function ProfileSettings(props) {
             placeholder="Confirm new password"
             defaultValue=""
           />
-        </View>
-        <View style={s.btnArea}>
           <TouchableOpacity style={s.btnChanges}>
             <Text style={s.textBtn}>Save Changes</Text>
           </TouchableOpacity>

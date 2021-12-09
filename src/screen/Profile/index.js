@@ -1,23 +1,32 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
+import axios from '../../utils/axios';
 
 import s from './style';
 
-import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  Button,
-} from 'react-native';
+import {View, Text} from 'react-native';
 
 import ProfileSettings from '../../components/ProfileSettings';
 import OrderHistory from '../../components/OrderHistory';
 
 function Profile(props) {
   const [tab, setTab] = useState('info');
+  const [dataHistory, setDataHistory] = useState([]);
+  const user = useSelector(state => state.user.user);
 
+  const getHistory = async id => {
+    try {
+      const res = await axios.get(`/booking/user/${id}`);
+      setDataHistory(res.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(dataHistory, 'data order');
+  useEffect(() => {
+    getHistory(user.id_user);
+  }, [user.id_user]);
   return (
     <>
       <View style={s.tabArea}>
@@ -28,7 +37,11 @@ function Profile(props) {
           Order History
         </Text>
       </View>
-      {tab === 'info' ? <ProfileSettings /> : <OrderHistory />}
+      {tab === 'info' ? (
+        <ProfileSettings />
+      ) : (
+        <OrderHistory dataHistory={dataHistory} />
+      )}
     </>
   );
 }

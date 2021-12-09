@@ -8,7 +8,7 @@ import Register from '../screen/Register';
 
 function AuthNavigator() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Register">
       <Stack.Screen
         component={Login}
         name="Login"

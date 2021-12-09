@@ -50,7 +50,14 @@ export default StyleSheet.create({
     marginTop: 22,
     padding: 22,
     backgroundColor: 'white',
-    height: 760,
+    height: 500,
+    borderRadius: 8,
+  },
+  passwordSetting: {
+    marginTop: 22,
+    padding: 22,
+    backgroundColor: 'white',
+    height: 400,
     borderRadius: 8,
   },
   lableContent: {
@@ -71,7 +78,7 @@ export default StyleSheet.create({
   btnChanges: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 28,
+    marginTop: 36,
     backgroundColor: '#5F2EEA',
     height: 48,
     borderRadius: 8,

@@ -23,7 +23,16 @@ function HomeNavigator() {
         name="LandingPage"
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen component={}/> */}
+      <Stack.Screen
+        component={DetailMovie}
+        name="DetailMovie"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={Order}
+        name="Order"
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }
@@ -34,30 +43,6 @@ function ProfileNavigator() {
       <Stack.Screen
         component={Profile}
         name="Profile"
-        options={{headerShown: false}}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function DetailMovieNavigator() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        component={DetailMovie}
-        name="DetailMovie"
-        options={{headerShown: false}}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function OrderNavigator() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        component={Order}
-        name="Order"
         options={{headerShown: false}}
       />
     </Stack.Navigator>
@@ -101,16 +86,12 @@ function AppNavigator() {
         name="ProfileNavigator"
         options={{
           title: 'Profile',
-          drawerIcon: ({size, color}) => (
-            <Icon name="user" size={size} color={color} />
-          ),
+          // drawerIcon: ({size, color}) => (
+          //   <Icon name="user" size={size} color={color} />
+          // ),
         }}
       />
-      <Drawer.Screen
-        component={DetailMovieNavigator}
-        name="DetailMovieNavigator"
-      />
-      <Drawer.Screen component={OrderNavigator} name="Order" />
+
       <Drawer.Screen component={PaymentNavigator} name="Payment" />
       <Drawer.Screen component={TicketNavigator} name="Ticket" />
     </Drawer.Navigator>

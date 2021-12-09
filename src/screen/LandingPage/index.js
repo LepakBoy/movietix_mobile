@@ -36,8 +36,7 @@ function LandingPage(props) {
   const [movies, setMovies] = useState([]);
 
   const toDetailMovie = id => {
-    props.navigation.navigate('DetailMovieNavigator', {
-      screen: 'DetailMovie',
+    props.navigation.navigate('DetailMovie', {
       params: {idMovie: id},
     });
   };
@@ -107,25 +106,7 @@ function LandingPage(props) {
           )}
           keyExtractor={item => item.id}
         />
-        {/* <FlatList
-          horizontal
-          keyExtractor={item => item.id}
-          data={movies}
-          renderItem={({item}) => (
-            <View style={styles.cardShowing}>
-              <Image
-                style={styles.imageShowing}
-                source={
-                  item.image
-                    ? {
-                        uri: `http://192.168.100.4:3000/uploads/movie/${item.image}`,
-                      }
-                    : require('../../assets/images/default.jpg')
-                }
-              />
-            </View>
-          )}
-        /> */}
+
         <View>
           <View style={styles.showingHeader}>
             <Text style={styles.textShowing}>Upcoming Movies</Text>

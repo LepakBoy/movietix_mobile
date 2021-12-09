@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import s from './style';
 
 import {ScrollView, View, Text, TouchableOpacity, Image} from 'react-native';
@@ -7,6 +7,17 @@ import Icon from 'react-native-vector-icons/Feather';
 import Footer from '../../components/Footer';
 
 function Order(props) {
+  const [schedule, setSchedule] = useState({});
+  const [movie, setMovie] = useState('');
+
+  useEffect(() => {
+    setSchedule(props.route.params.params.schedule);
+    setMovie(props.route.params.params.movie);
+  }, [props.route.params.params]);
+
+  console.log(schedule, 'tangkep');
+  console.log(movie, 'pelem,');
+
   const toPayment = () => {
     props.navigation.navigate('Payment');
   };
@@ -60,10 +71,16 @@ function Order(props) {
           <View style={s.orderHeader}>
             <Image
               style={s.teaterLogo}
-              source={require('../../assets/images/cineone.png')}
+              source={
+                schedule.teater === 'hiflix'
+                  ? require('../../assets/images/hiflix.png')
+                  : schedule.teater === 'cinepolis'
+                  ? require('../../assets/images/cineone.png')
+                  : require('../../assets/images/ebv.png')
+              }
             />
-            <Text style={s.teaterName}>CineOne21 Cinema</Text>
-            <Text style={s.movieName}>Spide-Man Homecoming</Text>
+            <Text style={s.teaterName}>{schedule.teater}</Text>
+            <Text style={s.movieName}>{movie}</Text>
           </View>
           <View style={s.detailOrder}>
             <View style={s.leftSide}>
@@ -72,8 +89,8 @@ function Order(props) {
               <Text style={s.textLeft}>Seat choosed</Text>
             </View>
             <View style={s.leftSide}>
-              <Text style={s.textRight}>02.00pm</Text>
-              <Text style={s.textRight}>$10</Text>
+              <Text style={s.textRight}>{schedule.time}</Text>
+              <Text style={s.textRight}>{`Rp. ${schedule.price}`}</Text>
               <Text style={s.textRight}>C4, C5, C6</Text>
             </View>
           </View>

@@ -2,14 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import s from './style';
 
-import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  FlatList,
-} from 'react-native';
+import {ScrollView, View, Text, TouchableOpacity, Image} from 'react-native';
 
 import Footer from '../../components/Footer';
 
@@ -18,17 +11,17 @@ import {Picker} from '@react-native-picker/picker';
 import axios from '../../utils/axios';
 
 function DetailMovie(props) {
-  //state DatePicker
   const [date, setDate] = useState(new Date(Date.now()));
   const [open, setOpen] = useState(false);
-  // state picker
-  const [selectedLanguage, setSelectedLanguage] = useState();
-
+  const [location, setLocation] = useState('');
   const [movie, setMovie] = useState([]);
   const [scheduleList, setScheduleList] = useState([]);
   const [releaseDate, setReleaseDate] = useState('');
-
-  // console.log(scheduleList, 'jadwal');
+  const [scheduleSelected, setScheduleSelected] = useState({
+    time: '',
+    teater: '',
+    price: 0,
+  });
 
   const getMovie = async id => {
     try {
@@ -52,14 +45,17 @@ function DetailMovie(props) {
   };
 
   useEffect(() => {
-    getMovie(props.route.params.idMovie);
-    getSchedule(1, 3, '', 'DESC', props.route.params.idMovie);
-  }, [props.route.params]);
+    getMovie(props.route.params.params.idMovie);
+    getSchedule(1, 3, location, 'DESC', props.route.params.params.idMovie);
+  }, [props.route.params, location]);
 
-  // const toOrder = () => {
-  //   props.navigation.navigate('Order');
-  // };
-  // state datePicker
+  const toOrder = () => {
+    scheduleSelected.time && scheduleSelected.teater
+      ? props.navigation.navigate('Order', {
+          params: {movie: movie.movie_name, schedule: scheduleSelected},
+        })
+      : alert('Please choose time first before continue');
+  };
 
   return (
     <ScrollView>
@@ -123,10 +119,9 @@ function DetailMovie(props) {
 
           <View style={s.picker}>
             <Picker
-              selectedValue={selectedLanguage}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedLanguage(itemValue)
-              }>
+              selectedValue={location}
+              onValueChange={(itemValue, itemIndex) => setLocation(itemValue)}>
+              <Picker.Item label="All location" value="" />
               <Picker.Item
                 style={s.pickerItem}
                 label="Jakarta"
@@ -134,86 +129,70 @@ function DetailMovie(props) {
               />
               <Picker.Item label="Bogor" value="bogor" />
               <Picker.Item label="Bandung" value="bandung" />
-              <Picker.Item label="Bogor" value="bogor" />
-              <Picker.Item label="Bandung" value="bandung" />
-              <Picker.Item label="Bogor" value="bogor" />
-              <Picker.Item label="Bandung" value="bandung" />
-              <Picker.Item label="Bogor" value="bogor" />
             </Picker>
           </View>
-
-          {/* <TouchableOpacity style={s.btnSetDate}>
-          <Text style={s.textSetDate}>Set a city</Text>
-        </TouchableOpacity> */}
         </View>
 
         {/* card schedule === looping */}
         {scheduleList.length > 0 ? (
-          <FlatList
-            data={scheduleList}
-            renderItem={({item}) => (
-              <View style={s.scheduleList}>
-                <View style={s.cardSchedule}>
-                  <View style={s.headerSchedule}>
-                    <Image
-                      source={
-                        item.teater_name === 'hiflix'
-                          ? require('../../assets/images/hiflix.png')
-                          : item.teater_name === 'cinepolis'
-                          ? require('../../assets/images/cineone.png')
-                          : require('../../assets/images/ebv.png')
-                      }
-                    />
-                    <View>
-                      <Text style={s.address}>{item.location}</Text>
-                    </View>
-                    <View style={s.listTime}>
-                      {
-                        // <FlatList
-                        //   style={s.listTime}
-                        //   data={item.time_schedule}
-                        //   renderItem={({list}) => (
-                        //     <Text style={s.time}>{list}</Text>
-                        //   )}
-                        //   keyExtractor={item => item.id_schedule}
-                        // />
-                      }
-
-                      <Text style={s.time}>08.00am</Text>
-                      <Text style={s.time}>08.00am</Text>
-                      <Text style={s.time}>08.00am</Text>
-                      <Text style={s.time}>08.00am</Text>
-                      <Text style={s.time}>08.00am</Text>
-                    </View>
-                    <View style={s.priceList}>
-                      <Text
-                        style={{
-                          color: '#6B6B6B',
-                          fontSize: 22,
-                          fontWeight: '600',
-                        }}>
-                        Price
-                      </Text>
-                      <Text
-                        style={{
-                          color: '#000000',
-                          fontSize: 22,
-                          fontWeight: '600',
-                        }}>
-                        $10.00/seat
-                      </Text>
-                    </View>
+          scheduleList.map(item => (
+            <View style={s.scheduleList}>
+              <View style={s.cardSchedule}>
+                <View style={s.headerSchedule}>
+                  <Image
+                    source={
+                      item.teater_name === 'hiflix'
+                        ? require('../../assets/images/hiflix.png')
+                        : item.teater_name === 'cinepolis'
+                        ? require('../../assets/images/cineone.png')
+                        : require('../../assets/images/ebv.png')
+                    }
+                  />
+                  <View>
+                    <Text style={s.address}>{item.location}</Text>
                   </View>
-                  <TouchableOpacity style={s.btnBook}>
-                    <Text style={s.textBook}>Book now</Text>
-                  </TouchableOpacity>
+                  <View style={s.listTime}>
+                    {item.time_schedule.map(list => (
+                      <Text
+                        onPress={() =>
+                          setScheduleSelected({
+                            time: list,
+                            teater: item.teater_name,
+                            price: item.price,
+                          })
+                        }
+                        style={s.time}>
+                        {list}
+                      </Text>
+                    ))}
+                  </View>
+                  <View style={s.priceList}>
+                    <Text
+                      style={{
+                        color: '#6B6B6B',
+                        fontSize: 22,
+                        fontWeight: '600',
+                      }}>
+                      Price
+                    </Text>
+                    <Text
+                      style={{
+                        color: '#000000',
+                        fontSize: 22,
+                        fontWeight: '600',
+                      }}>
+                      {`Rp. ${item.price}/seat`}
+                    </Text>
+                  </View>
                 </View>
+                <TouchableOpacity onPress={toOrder} style={s.btnBook}>
+                  <Text style={s.textBook}>Book now</Text>
+                </TouchableOpacity>
               </View>
-            )}
-            keyExtractor={item => item.id_schedule}
-          />
+            </View>
+          ))
         ) : (
-          <Text>no data</Text>
+          <Text>no schedule</Text>
         )}
 
         {/* ================================== */}

@@ -1,18 +1,25 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function SplashScreen(props) {
+  const getTokens = async () => {
+    try {
+      const tokens = await AsyncStorage.getItem('token');
+      console.log(tokens, 'token');
+
+      setTimeout(() => {
+        if (tokens) {
+          props.navigation.navigate('AppScreen');
+        } else {
+          props.navigation.navigate('AuthScreen');
+        }
+      }, 2000);
+    } catch (err) {}
+  };
+
   useEffect(() => {
-    const token = false;
-    setTimeout(() => {
-      // props.navigation.navigate('AppScreen', {screen: 'HomeNavigator'});
-      if (token) {
-        props.navigation.navigate('AppScreen');
-      } else {
-        props.navigation.navigate('AuthScreen');
-      }
-    }, 2000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getTokens();
   }, []);
 
   return (
