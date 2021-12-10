@@ -23,7 +23,7 @@ export default StyleSheet.create({
     // height: 400,
   },
   seatPicker: {
-    backgroundColor: '#D6D8E7',
+    backgroundColor: 'red',
     height: 190,
     justifyContent: 'center',
     alignItems: 'center',
@@ -40,6 +40,14 @@ export default StyleSheet.create({
     marginLeft: 12,
     fontSize: 14,
     fontWeight: '500',
+  },
+  btnReset: {
+    marginTop: 22,
+    borderRadius: 6,
+    height: 36,
+    backgroundColor: '#5F2EEA',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   keySeat: {
     width: 22,

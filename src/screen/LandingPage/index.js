@@ -105,7 +105,7 @@ function LandingPage(props) {
               </TouchableOpacity>
             </View>
           )}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id_movie}
         />
 
         <View>
@@ -155,7 +155,7 @@ function LandingPage(props) {
               </TouchableOpacity> */}
             </View>
           )}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item.id_movie}
         />
         <View
           style={{

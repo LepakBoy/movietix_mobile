@@ -18,12 +18,14 @@ function DetailMovie(props) {
   const [scheduleList, setScheduleList] = useState([]);
   const [releaseDate, setReleaseDate] = useState('');
   const [scheduleSelected, setScheduleSelected] = useState({
+    idSchedule: '',
     time: '',
     teater: '',
     price: 0,
   });
 
-  console.log(typeof date);
+  // console.log(movie);
+  // console.log(date.toISOString().split('T')[0]);
 
   const getMovie = async id => {
     try {
@@ -56,7 +58,12 @@ function DetailMovie(props) {
   const toOrder = () => {
     scheduleSelected.time && scheduleSelected.teater
       ? props.navigation.navigate('Order', {
-          params: {movie: movie.movie_name, schedule: scheduleSelected},
+          params: {
+            idMovie: movie.id_movie,
+            movie: movie.movie_name,
+            schedule: scheduleSelected,
+            date: date.toISOString().split('T')[0],
+          },
         })
       : alert('Please choose time first before continue');
   };
@@ -105,7 +112,7 @@ function DetailMovie(props) {
         <View style={s.setMenu}>
           <DatePicker
             modal
-            mode="date"
+            mode={'date'}
             open={open}
             date={date}
             onConfirm={date => {
@@ -140,7 +147,7 @@ function DetailMovie(props) {
         {/* card schedule === looping */}
         {scheduleList.length > 0 ? (
           scheduleList.map(item => (
-            <View style={s.scheduleList}>
+            <View style={s.scheduleList} key={item.id_schedule}>
               <View style={s.cardSchedule}>
                 <View style={s.headerSchedule}>
                   <Image
@@ -158,8 +165,10 @@ function DetailMovie(props) {
                   <View style={s.listTime}>
                     {item.time_schedule.map(list => (
                       <Text
+                        key={list}
                         onPress={() =>
                           setScheduleSelected({
+                            idSchedule: item.id_schedule,
                             time: list,
                             teater: item.teater_name,
                             price: item.price,

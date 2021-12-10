@@ -1,22 +1,69 @@
 import React, {useState, useEffect} from 'react';
 import s from './style';
+import Seat from '../../components/Seat';
 
-import {ScrollView, View, Text, TouchableOpacity, Image} from 'react-native';
+import {
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  Button,
+} from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 import Footer from '../../components/Footer';
+import axios from '../../utils/axios';
 
 function Order(props) {
   const [schedule, setSchedule] = useState({});
   const [movie, setMovie] = useState('');
+  const [idMovie, setIdMovie] = useState('');
+  const [date, setDate] = useState('');
+  const [seatBooked, setSeatBooked] = useState([]);
+
+  const listSeat = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+  const [selectedSeat, setSelectedSeat] = useState([]);
+  const [reservedSeat, setReservedSeat] = useState([]);
+
+  const getSeatBooked = async (idSchedule, idMovie, date, time) => {
+    const res = await axios.get(
+      `/seat/?id_schedule=${idSchedule}&id_movie=${idMovie}&date_booking=${date}&time_booking=${time}`,
+    );
+
+    setReservedSeat(res.data.data);
+  };
 
   useEffect(() => {
     setSchedule(props.route.params.params.schedule);
     setMovie(props.route.params.params.movie);
+    setDate(props.route.params.params.date);
+    setIdMovie(props.route.params.params.idMovie);
+
+    const {schedule, date, idMovie} = props.route.params.params;
+
+    getSeatBooked(schedule.idSchedule, idMovie, date, schedule.time);
   }, [props.route.params.params]);
 
-  console.log(schedule, 'tangkep');
-  console.log(movie, 'pelem,');
+  const handleSelectedSeat = data => {
+    if (selectedSeat.includes(data)) {
+      const deleteSeat = selectedSeat.filter(el => {
+        return el !== data;
+      });
+      setSelectedSeat(deleteSeat);
+    } else {
+      setSelectedSeat([...selectedSeat, data]);
+    }
+  };
+
+  const handleResetSeat = () => {
+    setSelectedSeat([]);
+  };
+
+  // const handleBookingSeat = () => {
+  //   console.log(selectedSeat);
+  // };
 
   const toPayment = () => {
     props.navigation.navigate('Payment');
@@ -26,9 +73,28 @@ function Order(props) {
       <View style={s.wrapper}>
         <Text style={s.label}>Choose your seat</Text>
         <View style={s.content}>
-          <View style={s.seatPicker}>
-            <Text>seat picker</Text>
-          </View>
+          {/* <View style={s.seatPicker}> */}
+          {/* <Text>seat picker</Text> */}
+          <FlatList
+            data={listSeat}
+            keyExtractor={item => item}
+            renderItem={({item}) => (
+              <Seat
+                seatAlphabhet={item}
+                reserved={reservedSeat}
+                selected={selectedSeat}
+                selectSeat={handleSelectedSeat}
+              />
+            )}
+          />
+          {/* </View> */}
+          {/* <Button title="Booking" onPress={handleBookingSeat} /> */}
+          <TouchableOpacity onPress={handleResetSeat} style={s.btnReset}>
+            <Text style={{color: 'white', fontSize: 16, fontWeight: '500'}}>
+              Reset
+            </Text>
+          </TouchableOpacity>
+
           <Text style={[s.subLabel, {marginTop: 18}]}>Seating key</Text>
           <View
             style={{
@@ -84,7 +150,7 @@ function Order(props) {
           </View>
           <View style={s.detailOrder}>
             <View style={s.leftSide}>
-              <Text style={s.textLeft}>Tuesday, 07 July 2020</Text>
+              <Text style={s.textLeft}>{date}</Text>
               <Text style={s.textLeft}>One ticket price</Text>
               <Text style={s.textLeft}>Seat choosed</Text>
             </View>

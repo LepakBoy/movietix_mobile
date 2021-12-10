@@ -26,15 +26,13 @@ function ProfileSettings(props) {
     setFormData({...formData, [name]: text});
   };
 
-  const changeData = async () => {
+  async function changeData() {
     try {
       const result = await axios.patch('/user/update-profile', formData);
       // dispatch(user);
       console.log(result, 'result');
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    } catch (err) {}
+  }
 
   // console.log(formData, 'form data');
   return (
