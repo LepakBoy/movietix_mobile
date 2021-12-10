@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
 import s from './style';
 
 import {
@@ -12,12 +13,28 @@ import {
 
 import Footer from '../../components/Footer';
 
-function Payment() {
+function Payment(props) {
+  // const [totalPrice, setTotalPrice] = useState(0);
+  // const [seat, setSeat] = useState([]);
+  // const [idMovie, setIdMovie] = useState('');
+  // const [idSchedule, setIdSchedule] = useState('');
+  // const [time, setTime] = useState('initialState');
+  // const [date, setDate] = useState('');
+
+  const user = useSelector(state => state.user.user);
+  const fullName = `${user.first_name} ${user.last_name}`;
+  // console.log(user, fullName);
+  const [dataOrder, setDataOrder] = useState({});
+  useEffect(() => {
+    // console.log(props.route.params);
+    setDataOrder(props.route.params);
+  }, [props.route.params]);
+
   return (
     <>
       <View style={s.totalPayment}>
         <Text style={s.textTotal}>Total Payment</Text>
-        <Text style={s.textAmount}>$30</Text>
+        <Text style={s.textAmount}>{`Rp. ${dataOrder.totalPrice}`}</Text>
       </View>
 
       <ScrollView>
@@ -72,25 +89,25 @@ function Payment() {
             <Text style={s.labelPersonal}>Full Name</Text>
             <TextInput
               placeholder="Type your name"
-              defaultValue=""
+              defaultValue={fullName}
               style={s.inputText}
             />
             <Text style={[s.labelPersonal, {marginTop: 18}]}>Email</Text>
             <TextInput
               placeholder="Type your email"
-              defaultValue=""
+              defaultValue={user.email}
               style={s.inputText}
             />
-            <Text style={[s.labelPersonal, {marginTop: 18}]}>Phone Number</Text>
+            {/* <Text style={[s.labelPersonal, {marginTop: 18}]}>Phone Number</Text>
             <TextInput
               placeholder="Type your phone number"
               defaultValue=""
               style={s.inputText}
-            />
-            <View style={s.warn}>
+            /> */}
+            {/* <View style={s.warn}>
               <Image source={require('../../assets/images/warn.png')} />
               <Text style={s.textWarn}>Fill your data correctly</Text>
-            </View>
+            </View> */}
           </View>
           <View style={s.btnArea}>
             <TouchableOpacity style={s.btnPay}>

@@ -2,7 +2,7 @@ import axios from '../../utils/axios';
 import React, {useState} from 'react';
 import {View, Text, TextInput, Image, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {user} from '../../stores/action/user';
+import {getUser} from '../../stores/action/user';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -24,7 +24,7 @@ function Login(props) {
       const result = await axios.post('/auth/login', form);
       await AsyncStorage.setItem('token', result.data.data.token);
       await AsyncStorage.setItem('refreshToken', result.data.data.refreshToken);
-      dispatch(user(result.data.data.id_user));
+      dispatch(getUser(result.data.data.id_user));
       props.navigation.navigate('AppScreen', {
         screen: 'Home',
       });

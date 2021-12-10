@@ -19,13 +19,16 @@ import axios from '../../utils/axios';
 function Order(props) {
   const [schedule, setSchedule] = useState({});
   const [movie, setMovie] = useState('');
-  const [idMovie, setIdMovie] = useState('');
-  const [date, setDate] = useState('');
-  const [seatBooked, setSeatBooked] = useState([]);
+  const [idMovie, setidMovie] = useState('');
+  // console.log(schedule, 'id');
 
+  const [date, setDate] = useState('');
+  // console.log(date);
   const listSeat = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [reservedSeat, setReservedSeat] = useState([]);
+
+  // console.log(selectedSeat.length * schedule.price);
 
   const getSeatBooked = async (idSchedule, idMovie, date, time) => {
     const res = await axios.get(
@@ -39,7 +42,7 @@ function Order(props) {
     setSchedule(props.route.params.params.schedule);
     setMovie(props.route.params.params.movie);
     setDate(props.route.params.params.date);
-    setIdMovie(props.route.params.params.idMovie);
+    setidMovie(props.route.params.params.idMovie);
 
     const {schedule, date, idMovie} = props.route.params.params;
 
@@ -61,20 +64,27 @@ function Order(props) {
     setSelectedSeat([]);
   };
 
-  // const handleBookingSeat = () => {
-  //   console.log(selectedSeat);
-  // };
-
+  // console.log(selectedSeat);
   const toPayment = () => {
-    props.navigation.navigate('Payment');
+    selectedSeat.length > 0
+      ? props.navigation.navigate('Payment', {
+          screen: 'Payment',
+          params: {
+            totalPrice: selectedSeat.length * schedule.price,
+            seat: selectedSeat,
+            idMovie: idMovie,
+            idSchedule: schedule.idSchedule,
+            time: schedule.time,
+            date: date,
+          },
+        })
+      : alert('choose your seat before continue to payment');
   };
   return (
     <ScrollView>
       <View style={s.wrapper}>
         <Text style={s.label}>Choose your seat</Text>
         <View style={s.content}>
-          {/* <View style={s.seatPicker}> */}
-          {/* <Text>seat picker</Text> */}
           <FlatList
             data={listSeat}
             keyExtractor={item => item}
@@ -87,8 +97,7 @@ function Order(props) {
               />
             )}
           />
-          {/* </View> */}
-          {/* <Button title="Booking" onPress={handleBookingSeat} /> */}
+
           <TouchableOpacity onPress={handleResetSeat} style={s.btnReset}>
             <Text style={{color: 'white', fontSize: 16, fontWeight: '500'}}>
               Reset
@@ -157,12 +166,18 @@ function Order(props) {
             <View style={s.leftSide}>
               <Text style={s.textRight}>{schedule.time}</Text>
               <Text style={s.textRight}>{`Rp. ${schedule.price}`}</Text>
-              <Text style={s.textRight}>C4, C5, C6</Text>
+              <Text style={s.textRight}>
+                {selectedSeat.length > 0
+                  ? selectedSeat.join(', ')
+                  : 'No seat selected'}
+              </Text>
             </View>
           </View>
           <View style={s.priceContent}>
             <Text style={s.total}>Total Payment</Text>
-            <Text style={s.amount}>$30</Text>
+            <Text style={s.amount}>{`Rp. ${
+              schedule.price * selectedSeat.length
+            }`}</Text>
           </View>
         </View>
         <View style={s.btnArea}>

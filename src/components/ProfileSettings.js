@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-
+import React, {useState, useEffect} from 'react';
+import {getUser} from '../stores/action/user';
 import s from '../screen/Profile/style';
 
 import {
@@ -18,7 +18,16 @@ import axios from '../utils/axios';
 function ProfileSettings(props) {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
-  const [formData, setFormData] = useState({first_name: '', last_name: ''});
+  const [dataUser, setDataUser] = useState({
+    first_name: '',
+    last_name: '',
+  });
+  const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
+  });
+
+  console.log(user, 'state user');
 
   const fullName = `${user.first_name} ${user.last_name}`;
 
@@ -26,12 +35,24 @@ function ProfileSettings(props) {
     setFormData({...formData, [name]: text});
   };
 
-  async function changeData() {
-    try {
-      const result = await axios.patch('/user/update-profile', formData);
-      // dispatch(user);
-      console.log(result, 'result');
-    } catch (err) {}
+  useEffect(() => {
+    dispatch(getUser(user.id_user)).then(res => {
+      setDataUser({
+        ...dataUser,
+        first_name: res.value.data.data[0].first_name,
+        last_name: res.value.data.data[0].last_name,
+      });
+    });
+  }, []);
+
+  function changeData() {
+    axios.patch('/user/update-profile', formData).then(res => {
+      alert('success update data');
+      dispatch(getUser(user.id_user));
+    });
+    // axios.get(`/user/${user.id_user}`);
+
+    // console.log(result, 'result');
   }
 
   // console.log(formData, 'form data');
@@ -60,14 +81,14 @@ function ProfileSettings(props) {
             onChangeText={text => changeText(text, 'first_name')}
             style={s.input}
             placeholder="Enter your first name"
-            defaultValue={user.first_name}
+            defaultValue={dataUser.first_name}
           />
           <Text style={[s.lableContent, {marginTop: 28}]}>Last Name</Text>
           <TextInput
             onChangeText={text => changeText(text, 'last_name')}
             style={s.input}
             placeholder="Enter your last name"
-            defaultValue={user.last_name}
+            defaultValue={dataUser.last_name}
           />
           <Text style={[s.lableContent, {marginTop: 28}]}>Email</Text>
           <TextInput
