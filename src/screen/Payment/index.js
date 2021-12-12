@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import Footer from '../../components/Footer';
+import axios from '../../utils/axios';
 
 function Payment(props) {
   // const [totalPrice, setTotalPrice] = useState(0);
@@ -23,18 +24,26 @@ function Payment(props) {
 
   const user = useSelector(state => state.user.user);
   const fullName = `${user.first_name} ${user.last_name}`;
+  const [total, setTotal] = useState(0);
   // console.log(user, fullName);
   const [dataOrder, setDataOrder] = useState({});
   useEffect(() => {
-    // console.log(props.route.params);
-    setDataOrder(props.route.params);
+    setDataOrder(props.route.params.dataOrder);
+    setTotal(props.route.params.totalPrice);
   }, [props.route.params]);
+
+  function handleBooking() {
+    axios.post('/booking', dataOrder).then(res => {
+      console.log(res);
+      alert('awi');
+    });
+  }
 
   return (
     <>
       <View style={s.totalPayment}>
         <Text style={s.textTotal}>Total Payment</Text>
-        <Text style={s.textAmount}>{`Rp. ${dataOrder.totalPrice}`}</Text>
+        <Text style={s.textAmount}>{`Rp. ${total}`}</Text>
       </View>
 
       <ScrollView>
@@ -110,7 +119,7 @@ function Payment(props) {
             </View> */}
           </View>
           <View style={s.btnArea}>
-            <TouchableOpacity style={s.btnPay}>
+            <TouchableOpacity style={s.btnPay} onPress={handleBooking}>
               <Text style={s.textPay}>Pay your order</Text>
             </TouchableOpacity>
           </View>

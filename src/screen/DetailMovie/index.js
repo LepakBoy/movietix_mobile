@@ -9,6 +9,7 @@ import Footer from '../../components/Footer';
 import DatePicker from 'react-native-date-picker';
 import {Picker} from '@react-native-picker/picker';
 import axios from '../../utils/axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function DetailMovie(props) {
   const [date, setDate] = useState(new Date(Date.now()));
@@ -24,8 +25,17 @@ function DetailMovie(props) {
     price: 0,
   });
 
+  const [token, setToken] = useState('');
   // console.log(movie);
   // console.log(date.toISOString().split('T')[0]);
+
+  const getToken = async () => {
+    try {
+      const result = await AsyncStorage.getItem('token');
+      setToken(result);
+    } catch (err) {}
+  };
+  console.log(token, 'state token');
 
   const getMovie = async id => {
     try {
@@ -51,21 +61,27 @@ function DetailMovie(props) {
   };
 
   useEffect(() => {
+    getToken();
     getMovie(props.route.params.params.idMovie);
     getSchedule(1, 3, location, 'DESC', props.route.params.params.idMovie);
-  }, [props.route.params, location]);
+  }, [props.route.params, location, token]);
 
   const toOrder = () => {
-    scheduleSelected.time && scheduleSelected.teater
-      ? props.navigation.navigate('Order', {
-          params: {
-            idMovie: movie.id_movie,
-            movie: movie.movie_name,
-            schedule: scheduleSelected,
-            date: date.toISOString().split('T')[0],
-          },
-        })
-      : alert('Please choose time first before continue');
+    if (token) {
+      scheduleSelected.time && scheduleSelected.teater
+        ? props.navigation.navigate('Order', {
+            params: {
+              idMovie: movie.id_movie,
+              movie: movie.movie_name,
+              schedule: scheduleSelected,
+              date: date.toISOString().split('T')[0],
+            },
+          })
+        : alert('Please choose time first before continue');
+    } else {
+      alert('Login first');
+      props.navigation.navigate('AuthScreen', {screen: 'Login'});
+    }
   };
 
   return (

@@ -23,7 +23,7 @@ function Profile(props) {
     }
   };
 
-  console.log(dataHistory, 'data order');
+  // console.log(dataHistory, 'data order');
   useEffect(() => {
     getHistory(user.id_user);
   }, [user.id_user]);

@@ -17,16 +17,31 @@ function Register(props) {
 
   const [error, setError] = useState(false);
   const [form, setForm] = useState({
-    first_name: '',
-    last_name: '',
     email: '',
     password: '',
+    first_name: '',
+    last_name: '',
   });
   const [disable, setDisable] = useState(true);
 
   const handleChangeText = (text, name) => {
     setForm({...form, [name]: text});
   };
+
+  const handleRegister = async () => {
+    try {
+      const regist = await axios.post('/auth/register', form);
+      alert(
+        'Success register, check your email for email activation before login ',
+      );
+      props.navigation.navigate('Login');
+      console.log(regist, 'hasil regisgter');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(form);
 
   return (
     <ScrollView style={styles.container}>
@@ -74,7 +89,7 @@ function Register(props) {
           defaultValue=""
         />
 
-        <TouchableOpacity style={styles.btnLogin}>
+        <TouchableOpacity onPress={handleRegister} style={styles.btnLogin}>
           <Text style={styles.textBtn}>Join for free</Text>
         </TouchableOpacity>
         <Text

@@ -16,21 +16,36 @@ import Icon from 'react-native-vector-icons/Feather';
 class DrawerContent extends React.Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      token: '',
+    };
   }
   // getToken = async () => {
   //   try {
   //     const token = await AsyncStorage.getItem('token');
-  //     console.log('tokennnnnnn');
+  //     console.log(token, 'tokennnnnnn');
+  //     this.setState({
+  //       token: token,
+  //     });
   //   } catch (err) {
   //     console.log(err);
   //   }
   // };
 
+  componentDidMount() {
+    // this.getToken();
+    // console.log(this.token, 'didmount');
+  }
+
+  componentDidUpdate() {
+    // this.token;
+  }
+
   handleLogout = async () => {
     try {
       await AsyncStorage.removeItem('token');
       await axios.post('/auth/logout');
+      // this.props.navigation.navigate('HomeNavigator', {screen: 'LandingPage'});
       this.props.navigation.navigate('AuthScreen', {screen: 'Login'});
     } catch (err) {
       console.log(err);
@@ -39,6 +54,7 @@ class DrawerContent extends React.Component {
   };
 
   render() {
+    // console.log(this.token, 'state class token');
     return (
       <View style={styles.container}>
         <DrawerContentScrollView {...this.props}>

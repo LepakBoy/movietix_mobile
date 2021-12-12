@@ -11,15 +11,31 @@ import {
 } from 'react-native';
 
 import Footer from '.././components/Footer';
+import axios from '../utils/axios';
 
 function OrderHistory(props) {
   const [data, setData] = useState([]);
+  const [movieHist, setMovieHist] = useState([]);
+
+  // const order = data.map(item => {
+  //   // console.log(item.id_movie, 'mapping');
+  //   axios.get(`/movie/${item.id_movie}`).then(res => {
+  //     setMovieHist(res.data.data);
+  //     // console.log(res.data.data, 'data movie order hist');
+  //   });
+  // });
+  // console.log(data, 'order');
+  // console.log(order);
+
+  const getMovie = id => {
+    const res = axios.get('/movie/');
+  };
 
   useEffect(() => {
     setData(props.dataHistory);
   }, []);
 
-  console.log(data);
+  // console.log(data);
   return (
     <ScrollView>
       <View style={s.wrapper}>

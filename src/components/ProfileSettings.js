@@ -18,6 +18,8 @@ import axios from '../utils/axios';
 function ProfileSettings(props) {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user);
+  const [newPass, setNewPass] = useState({password: '', conPassword: ''});
+
   const [dataUser, setDataUser] = useState({
     first_name: '',
     last_name: '',
@@ -27,12 +29,16 @@ function ProfileSettings(props) {
     last_name: '',
   });
 
-  console.log(user, 'state user');
+  console.log(newPass, 'password');
 
   const fullName = `${user.first_name} ${user.last_name}`;
 
   const changeText = (text, name) => {
     setFormData({...formData, [name]: text});
+  };
+
+  const changePass = (text, name) => {
+    setNewPass({...newPass, [name]: text});
   };
 
   useEffect(() => {
@@ -46,16 +52,24 @@ function ProfileSettings(props) {
   }, []);
 
   function changeData() {
-    axios.patch('/user/update-profile', formData).then(res => {
-      alert('success update data');
-      dispatch(getUser(user.id_user));
-    });
-    // axios.get(`/user/${user.id_user}`);
-
-    // console.log(result, 'result');
+    formData.first_name !== '' || formData.last_name !== ''
+      ? axios.patch('/user/update-profile', formData).then(res => {
+          alert('success update data');
+          dispatch(getUser(user.id_user));
+          setFormData({first_name: '', last_name: ''});
+        })
+      : alert('Insert new data first');
   }
 
-  // console.log(formData, 'form data');
+  const updatePassword = async () => {
+    newPass.password === newPass.conPassword
+      ? axios.patch('/user/password', newPass).then(res => {
+          alert('Password has been updated');
+          setNewPass({password: '', conPassword: ''});
+        })
+      : alert("New password and confirm password does'nt match");
+  };
+
   return (
     <ScrollView>
       <View style={s.wrapper}>
@@ -81,21 +95,22 @@ function ProfileSettings(props) {
             onChangeText={text => changeText(text, 'first_name')}
             style={s.input}
             placeholder="Enter your first name"
-            defaultValue={dataUser.first_name}
+            defaultValue={user.first_name}
           />
           <Text style={[s.lableContent, {marginTop: 28}]}>Last Name</Text>
           <TextInput
             onChangeText={text => changeText(text, 'last_name')}
             style={s.input}
             placeholder="Enter your last name"
-            defaultValue={dataUser.last_name}
+            defaultValue={user.last_name}
           />
           <Text style={[s.lableContent, {marginTop: 28}]}>Email</Text>
-          <TextInput
+          <Text style={{marginTop: 12}}>{user.email}</Text>
+          {/* <TextInput
             style={s.input}
             placeholder="Enter your email"
             defaultValue={user.email}
-          />
+          /> */}
           <TouchableOpacity onPress={changeData} style={s.btnChanges}>
             <Text style={s.textBtn}>Update Profile</Text>
           </TouchableOpacity>
@@ -107,22 +122,24 @@ function ProfileSettings(props) {
           </Text>
           <Text style={[s.lableContent, {marginTop: 28}]}>New Password</Text>
           <TextInput
+            onChangeText={text => changePass(text, 'password')}
             secureTextEntry={true}
             style={s.input}
             placeholder="Type new password"
-            defaultValue=""
+            defaultValue={newPass.password}
           />
           <Text style={[s.lableContent, {marginTop: 28}]}>
             Confirm New Password
           </Text>
           <TextInput
+            onChangeText={text => changePass(text, 'conPassword')}
             secureTextEntry={true}
             style={s.input}
             placeholder="Confirm new password"
-            defaultValue=""
+            defaultValue={newPass.conPassword}
           />
-          <TouchableOpacity style={s.btnChanges}>
-            <Text style={s.textBtn}>Save Changes</Text>
+          <TouchableOpacity onPress={updatePassword} style={s.btnChanges}>
+            <Text style={s.textBtn}>Update Password</Text>
           </TouchableOpacity>
         </View>
       </View>

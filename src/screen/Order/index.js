@@ -70,12 +70,15 @@ function Order(props) {
       ? props.navigation.navigate('Payment', {
           screen: 'Payment',
           params: {
+            dataOrder: {
+              date: date,
+              time: schedule.time,
+              idMovie: idMovie,
+              idSchedule: schedule.idSchedule,
+
+              seat: selectedSeat,
+            },
             totalPrice: selectedSeat.length * schedule.price,
-            seat: selectedSeat,
-            idMovie: idMovie,
-            idSchedule: schedule.idSchedule,
-            time: schedule.time,
-            date: date,
           },
         })
       : alert('choose your seat before continue to payment');
