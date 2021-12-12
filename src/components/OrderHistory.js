@@ -17,6 +17,8 @@ function OrderHistory(props) {
   const [data, setData] = useState([]);
   const [movieHist, setMovieHist] = useState([]);
 
+  // console.log(data);
+
   // const order = data.map(item => {
   //   // console.log(item.id_movie, 'mapping');
   //   axios.get(`/movie/${item.id_movie}`).then(res => {
@@ -33,7 +35,7 @@ function OrderHistory(props) {
 
   useEffect(() => {
     setData(props.dataHistory);
-  }, []);
+  }, [props.dataHistory]);
 
   // console.log(data);
   return (

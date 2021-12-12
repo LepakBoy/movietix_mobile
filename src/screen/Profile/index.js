@@ -18,6 +18,7 @@ function Profile(props) {
     try {
       const res = await axios.get(`/booking/user/${id}`);
       setDataHistory(res.data.data);
+      // console.log(res.data.data, 'res');
     } catch (err) {
       console.log(err);
     }
@@ -26,7 +27,8 @@ function Profile(props) {
   // console.log(dataHistory, 'data order');
   useEffect(() => {
     getHistory(user.id_user);
-  }, [user.id_user]);
+    // console.log('useeffect');
+  }, [user.id_user, dataHistory]);
   return (
     <>
       <View style={s.tabArea}>

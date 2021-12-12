@@ -20,22 +20,24 @@ function Order(props) {
   const [schedule, setSchedule] = useState({});
   const [movie, setMovie] = useState('');
   const [idMovie, setidMovie] = useState('');
-  // console.log(schedule, 'id');
-
   const [date, setDate] = useState('');
-  // console.log(date);
   const listSeat = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [reservedSeat, setReservedSeat] = useState([]);
 
-  // console.log(selectedSeat.length * schedule.price);
+  console.log(selectedSeat, 'booked');
 
-  const getSeatBooked = async (idSchedule, idMovie, date, time) => {
-    const res = await axios.get(
-      `/seat/?id_schedule=${idSchedule}&id_movie=${idMovie}&date_booking=${date}&time_booking=${time}`,
-    );
-
-    setReservedSeat(res.data.data);
+  const getSeatBooked = (idSchedule, idMovie, date, time) => {
+    const result = axios
+      .get(
+        `/seat/?id_schedule=${idSchedule}&id_movie=${idMovie}&date_booking=${date}&time_booking=${time}`,
+      )
+      .then(res => {
+        const booked = res.data.data.map(item => {
+          return item.seat;
+        });
+        setReservedSeat(booked);
+      });
   };
 
   useEffect(() => {
@@ -71,10 +73,10 @@ function Order(props) {
           screen: 'Payment',
           params: {
             dataOrder: {
-              date: date,
-              time: schedule.time,
-              idMovie: idMovie,
-              idSchedule: schedule.idSchedule,
+              date_booking: date,
+              time_booking: schedule.time,
+              id_movie: idMovie,
+              id_schedule: schedule.idSchedule,
 
               seat: selectedSeat,
             },

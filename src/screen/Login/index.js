@@ -25,7 +25,7 @@ function Login(props) {
       await AsyncStorage.setItem('token', result.data.data.token);
       await AsyncStorage.setItem('refreshToken', result.data.data.refreshToken);
       dispatch(getUser(result.data.data.id_user));
-      props.navigation.navigate('HomeNavigator', {
+      props.navigation.navigate('AppScreen', {
         screen: 'LandingPage',
       });
       // props.navigation.navigate('AppScreen', {

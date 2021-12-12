@@ -29,8 +29,6 @@ function ProfileSettings(props) {
     last_name: '',
   });
 
-  console.log(newPass, 'password');
-
   const fullName = `${user.first_name} ${user.last_name}`;
 
   const changeText = (text, name) => {

@@ -32,12 +32,20 @@ function Payment(props) {
     setTotal(props.route.params.totalPrice);
   }, [props.route.params]);
 
-  function handleBooking() {
-    axios.post('/booking', dataOrder).then(res => {
+  const handleBooking = async () => {
+    try {
+      const res = await axios.post('/booking', dataOrder);
       console.log(res);
       alert('awi');
-    });
-  }
+      props.navigation.navigate('HomeNavigator', {
+        screen: 'LandingPage',
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(dataOrder, 'dataorder');
 
   return (
     <>

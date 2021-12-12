@@ -35,7 +35,7 @@ function DetailMovie(props) {
       setToken(result);
     } catch (err) {}
   };
-  console.log(token, 'state token');
+  // console.log(token, 'state token');
 
   const getMovie = async id => {
     try {
