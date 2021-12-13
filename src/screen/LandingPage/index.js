@@ -18,22 +18,25 @@ import Footer from '../../components/Footer';
 import axios from '../../utils/axios';
 
 const MONTH = [
-  {name: 'January'},
-  {name: 'February'},
-  {name: 'March'},
-  {name: 'April'},
-  {name: 'May'},
-  {name: 'June'},
-  {name: 'July'},
-  {name: 'August'},
-  {name: 'September'},
-  {name: 'October'},
-  {name: 'November'},
-  {name: 'Desember'},
+  {name: 'All Movies', count: ''},
+  {name: 'January', count: 1},
+  {name: 'February', count: 2},
+  {name: 'March', count: 3},
+  {name: 'April', count: 4},
+  {name: 'May', count: 5},
+  {name: 'June', count: 6},
+  {name: 'July', count: 7},
+  {name: 'August ', count: 8},
+  {name: 'September', count: 9},
+  {name: 'October', count: 10},
+  {name: 'November', count: 11},
+  {name: 'Desember', count: 12},
 ];
 
 function LandingPage(props) {
+  const [count, setCount] = useState('');
   const [movies, setMovies] = useState([]);
+  const [upComingList, setUpComingList] = useState([]);
 
   const toDetailMovie = id => {
     props.navigation.navigate('DetailMovie', {
@@ -51,9 +54,22 @@ function LandingPage(props) {
     }
   }
 
+  const getUpcoming = async () => {
+    try {
+      const upComing = await axios.get(`/movie/all?filter=${count}`);
+      // console.log(upComing.data.data, 'data');
+      setUpComingList(upComing.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  console.log(upComingList, 'upcominglist');
+
   useEffect(() => {
     getMovie();
-  }, []);
+    getUpcoming();
+  }, [count]);
 
   return (
     <ScrollView>
@@ -119,16 +135,20 @@ function LandingPage(props) {
           horizontal
           data={MONTH}
           renderItem={({item}) => (
-            <View style={styles.monthList}>
+            <TouchableOpacity
+              style={styles.monthList}
+              onPress={() => {
+                setCount(item.count);
+              }}>
               <Text style={styles.textMonth}>{item.name}</Text>
-            </View>
+            </TouchableOpacity>
           )}
           keyExtractor={item => item.name}
         />
 
         <FlatList
           horizontal
-          data={movies}
+          data={upComingList}
           renderItem={({item}) => (
             <View style={styles.cardUpComing}>
               <Image
