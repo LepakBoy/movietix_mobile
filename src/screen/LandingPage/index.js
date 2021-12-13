@@ -16,6 +16,7 @@ import styles from './style';
 
 import Footer from '../../components/Footer';
 import axios from '../../utils/axios';
+import {API_BACKEND} from '@env';
 
 const MONTH = [
   {name: 'All Movies', count: ''},
@@ -64,11 +65,12 @@ function LandingPage(props) {
     }
   };
 
-  console.log(upComingList, 'upcominglist');
+  // console.log(upComingList, 'upcominglist');
 
   useEffect(() => {
     getMovie();
     getUpcoming();
+    console.log(API_BACKEND, 'api');
   }, [count]);
 
   return (
@@ -102,7 +104,7 @@ function LandingPage(props) {
                 source={
                   item.image
                     ? {
-                        uri: `http://192.168.100.4:3000/uploads/movie/${item.image}`,
+                        uri: `${API_BACKEND}uploads/movie/${item.image}`,
                       }
                     : require('../../assets/images/mv3.jpg')
                 }
@@ -156,7 +158,7 @@ function LandingPage(props) {
                 source={
                   item.image
                     ? {
-                        uri: `http://192.168.100.4:3000/uploads/movie/${item.image}`,
+                        uri: `${API_BACKEND}/uploads/movie/${item.image}`,
                       }
                     : require('../../assets/images/mv3.jpg')
                 }
