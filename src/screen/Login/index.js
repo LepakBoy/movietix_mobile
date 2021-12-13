@@ -21,13 +21,21 @@ function Login(props) {
 
   const handleLogin = async () => {
     try {
-      const result = await axios.post('/auth/login', form);
-      await AsyncStorage.setItem('token', result.data.data.token);
-      await AsyncStorage.setItem('refreshToken', result.data.data.refreshToken);
-      dispatch(getUser(result.data.data.id_user));
-      props.navigation.navigate('AppScreen', {
-        screen: 'LandingPage',
-      });
+      if (form.email === '' || form.password === '') {
+        alert('Please fill your data');
+      } else {
+        const result = await axios.post('/auth/login', form);
+        await AsyncStorage.setItem('token', result.data.data.token);
+        await AsyncStorage.setItem(
+          'refreshToken',
+          result.data.data.refreshToken,
+        );
+        dispatch(getUser(result.data.data.id_user));
+        props.navigation.navigate('AppScreen', {
+          screen: 'LandingPage',
+        });
+      }
+
       // props.navigation.navigate('AppScreen', {
       //   screen: 'Home',
       // });
@@ -62,7 +70,6 @@ function Login(props) {
           onChangeText={text => handleChangeText(text, 'password')}
           defaultValue=""
         />
-
         <TouchableOpacity
           style={styles.btnLogin}
           // disabled={disable}
@@ -71,6 +78,12 @@ function Login(props) {
         </TouchableOpacity>
         <Text style={styles.textForgotPass}>
           Forgot your password? Reset now
+        </Text>
+        <Text style={{textAlign: 'center', marginTop: 12}}>Or</Text>
+        <Text
+          style={{textAlign: 'center', marginTop: 12, fontSize: 16}}
+          onPress={() => props.navigation.navigate('Register')}>
+          Create new account
         </Text>
       </View>
     </View>

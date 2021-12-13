@@ -37,15 +37,19 @@ function Payment(props) {
       const res = await axios.post('/booking', dataOrder);
       console.log(res);
       alert('awi');
-      props.navigation.navigate('HomeNavigator', {
-        screen: 'LandingPage',
+      props.navigation.navigate('Ticket', {
+        params: {
+          dataOrder: dataOrder,
+          movieName: props.route.params.movieName,
+          totalPrice: props.route.params.totalPrice,
+        },
       });
     } catch (err) {
       console.log(err);
     }
   };
 
-  console.log(dataOrder, 'dataorder');
+  // console.log(dataOrder, 'dataorder');
 
   return (
     <>

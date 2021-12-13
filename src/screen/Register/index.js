@@ -30,18 +30,23 @@ function Register(props) {
 
   const handleRegister = async () => {
     try {
-      const regist = await axios.post('/auth/register', form);
-      alert(
-        'Success register, check your email for email activation before login ',
-      );
-      props.navigation.navigate('Login');
-      console.log(regist, 'hasil regisgter');
+      for (const item in form) {
+        if (!form[item]) {
+          alert('Please fill all data');
+          return;
+        } else {
+          const regist = await axios.post('/auth/register', form);
+          alert(
+            'Success register, check your email for email activation before login ',
+          );
+          props.navigation.navigate('Login');
+          console.log(regist, 'hasil regisgter');
+        }
+      }
     } catch (err) {
-      console.log(err);
+      alert(err.response.data.msg);
     }
   };
-
-  console.log(form);
 
   return (
     <ScrollView style={styles.container}>

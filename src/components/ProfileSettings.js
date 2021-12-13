@@ -60,12 +60,16 @@ function ProfileSettings(props) {
   }
 
   const updatePassword = async () => {
-    newPass.password === newPass.conPassword
-      ? axios.patch('/user/password', newPass).then(res => {
-          alert('Password has been updated');
-          setNewPass({password: '', conPassword: ''});
-        })
-      : alert("New password and confirm password does'nt match");
+    if (newPass.password === '' || newPass.conPassword === '') {
+      alert('Fill new password');
+    } else {
+      newPass.password === newPass.conPassword
+        ? axios.patch('/user/password', newPass).then(res => {
+            alert('Password has been updated');
+            setNewPass({password: '', conPassword: ''});
+          })
+        : alert("New password and confirm password does'nt match");
+    }
   };
 
   return (

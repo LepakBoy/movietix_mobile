@@ -33,6 +33,12 @@ function HomeNavigator() {
         name="Order"
         options={{headerShown: false}}
       />
+
+      <Stack.Screen
+        component={Ticket}
+        name="Ticket"
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }
@@ -93,7 +99,7 @@ function AppNavigator() {
       />
 
       <Drawer.Screen component={PaymentNavigator} name="Payment" />
-      <Drawer.Screen component={TicketNavigator} name="Ticket" />
+      {/* <Drawer.Screen component={TicketNavigator} name="Ticket" /> */}
     </Drawer.Navigator>
   );
 }

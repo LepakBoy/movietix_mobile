@@ -25,7 +25,7 @@ function Order(props) {
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [reservedSeat, setReservedSeat] = useState([]);
 
-  console.log(selectedSeat, 'booked');
+  // console.log(selectedSeat, 'booked');
 
   const getSeatBooked = (idSchedule, idMovie, date, time) => {
     const result = axios
@@ -66,6 +66,8 @@ function Order(props) {
     setSelectedSeat([]);
   };
 
+  // console.log(movie);
+
   // console.log(selectedSeat);
   const toPayment = () => {
     selectedSeat.length > 0
@@ -81,6 +83,7 @@ function Order(props) {
               seat: selectedSeat,
             },
             totalPrice: selectedSeat.length * schedule.price,
+            movieName: movie,
           },
         })
       : alert('choose your seat before continue to payment');
