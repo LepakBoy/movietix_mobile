@@ -9,26 +9,24 @@ import {View, Text} from 'react-native';
 import ProfileSettings from '../../components/ProfileSettings';
 import OrderHistory from '../../components/OrderHistory';
 
-function Profile(props) {
+function Profile({navigation}) {
   const [tab, setTab] = useState('info');
   const [dataHistory, setDataHistory] = useState([]);
   const user = useSelector(state => state.user.user);
 
+  console.log(navigation, 'props');
   const getHistory = async id => {
     try {
       const res = await axios.get(`/booking/user/${id}`);
       setDataHistory(res.data.data);
-      // console.log(res.data.data, 'res');
     } catch (err) {
       console.log(err);
     }
   };
 
-  // console.log(dataHistory, 'data order');
   useEffect(() => {
     getHistory(user.id_user);
-    // console.log('useeffect');
-  }, [user.id_user, dataHistory]);
+  }, [user.id_user]);
   return (
     <>
       <View style={s.tabArea}>
@@ -42,7 +40,7 @@ function Profile(props) {
       {tab === 'info' ? (
         <ProfileSettings />
       ) : (
-        <OrderHistory dataHistory={dataHistory} />
+        <OrderHistory navigation={navigation} dataHistory={dataHistory} />
       )}
     </>
   );

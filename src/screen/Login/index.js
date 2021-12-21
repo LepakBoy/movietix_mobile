@@ -11,9 +11,7 @@ import styles from './style';
 function Login(props) {
   const dispatch = useDispatch();
 
-  const [error, setError] = useState(false);
   const [form, setForm] = useState({email: '', password: ''});
-  const [disable, setDisable] = useState(true);
 
   const handleChangeText = (text, name) => {
     setForm({...form, [name]: text});
@@ -35,10 +33,6 @@ function Login(props) {
           screen: 'LandingPage',
         });
       }
-
-      // props.navigation.navigate('AppScreen', {
-      //   screen: 'Home',
-      // });
     } catch (err) {
       alert(err.response.data.msg);
     }

@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {useSelector} from 'react-redux';
 import s from '../screen/OrderHistory/style';
 
 import {
@@ -11,33 +12,17 @@ import {
 } from 'react-native';
 
 import Footer from '.././components/Footer';
-import axios from '../utils/axios';
 
 function OrderHistory(props) {
-  const [data, setData] = useState([]);
-  const [movieHist, setMovieHist] = useState([]);
+  const user = useSelector(state => state.user.user);
+  const [data, setData] = useState(props.dataHistory);
 
-  // console.log(data);
-
-  // const order = data.map(item => {
-  //   // console.log(item.id_movie, 'mapping');
-  //   axios.get(`/movie/${item.id_movie}`).then(res => {
-  //     setMovieHist(res.data.data);
-  //     // console.log(res.data.data, 'data movie order hist');
-  //   });
-  // });
-  // console.log(data, 'order');
-  // console.log(order);
-
-  const getMovie = id => {
-    const res = axios.get('/movie/');
+  const toTicket = id => {
+    props.navigation.navigate('Ticket', {
+      params: {idTicket: id},
+    });
   };
 
-  useEffect(() => {
-    setData(props.dataHistory);
-  }, [props.dataHistory]);
-
-  // console.log(data);
   return (
     <ScrollView>
       <View style={s.wrapper}>
@@ -47,12 +32,22 @@ function OrderHistory(props) {
             data={data}
             renderItem={({item}) => (
               <View style={s.cardHistory}>
-                <Image source={require('../assets/images/cineone.png')} />
+                <Image
+                  source={
+                    item.teater_name === 'cineone'
+                      ? require('../assets/images/cineone.png')
+                      : item.teater_name === 'hiflix'
+                      ? require('../assets/images/hiflix.png')
+                      : require('../assets/images/ebv.png')
+                  }
+                />
                 <Text style={s.teaterName}>
                   {`${item.date_booking.split('T')[0]}, ${item.time_booking}`}
                 </Text>
-                <Text style={s.movieName}>Spider-Man: Homecoming</Text>
-                <TouchableOpacity style={s.ticketStatus}>
+                <Text style={s.movieName}>{item.movie_name}</Text>
+                <TouchableOpacity
+                  onPress={() => toTicket(item.id_booking)}
+                  style={s.ticketStatus}>
                   <Text style={s.status}>Ticket in active</Text>
                 </TouchableOpacity>
               </View>

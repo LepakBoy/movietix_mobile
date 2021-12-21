@@ -1,8 +1,9 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {API_BACKEND} from '@env';
 
 const axiosApiIntaces = axios.create({
-  baseURL: 'http://192.168.100.4:3000',
+  baseURL: API_BACKEND,
 });
 
 const setToken = async (token, refreshToken) => {

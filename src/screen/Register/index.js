@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
+import {register} from '../../stores/action/register';
 
 import styles from './style';
 
@@ -22,11 +23,19 @@ function Register(props) {
     first_name: '',
     last_name: '',
   });
-  const [disable, setDisable] = useState(true);
 
   const handleChangeText = (text, name) => {
     setForm({...form, [name]: text});
   };
+
+  //   const regist = await axios.post('/auth/register', form);
+  //   alert(
+  //     'Success register, check your email for email activation before login ',
+  //   );
+  //   props.navigation.navigate('Login');
+  //   console.log(regist.data.data, 'hasil regisgter');
+  //   return;
+  // }
 
   const handleRegister = async () => {
     try {
@@ -35,16 +44,19 @@ function Register(props) {
           alert('Please fill all data');
           return;
         } else {
-          const regist = await axios.post('/auth/register', form);
+          const regist = dispatch(register(form));
+
           alert(
             'Success register, check your email for email activation before login ',
           );
           props.navigation.navigate('Login');
-          console.log(regist, 'hasil regisgter');
+          console.log(regist.data.data, 'hasil regisgter');
+          return;
         }
       }
     } catch (err) {
       alert(err.response.data.msg);
+      return;
     }
   };
 
@@ -61,7 +73,7 @@ function Register(props) {
         <Text style={styles.labelInput}>First Name</Text>
         <TextInput
           style={styles.textInput}
-          placeholder="Type your firstname"
+          placeholder="Type your first name"
           onChangeText={text => handleChangeText(text, 'first_name')}
           defaultValue=""
         />
@@ -87,7 +99,7 @@ function Register(props) {
         {/* input password */}
         <Text style={[styles.labelInput, {marginTop: 12}]}>Password</Text>
         <TextInput
-          securityTextEntry={true}
+          secureTextEntry={true}
           style={styles.textInput}
           placeholder="Type your password"
           onChangeText={text => handleChangeText(text, 'password')}

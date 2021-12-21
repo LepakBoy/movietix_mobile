@@ -13,7 +13,6 @@ import Payment from '../screen/Payment';
 import Ticket from '../screen/TIcket';
 
 import DrawerContent from '../components/DrawerContent';
-import Icon from 'react-native-vector-icons/Feather';
 
 function HomeNavigator() {
   return (
@@ -33,7 +32,11 @@ function HomeNavigator() {
         name="Order"
         options={{headerShown: false}}
       />
-
+      <Stack.Screen
+        component={Payment}
+        name="Payment"
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         component={Ticket}
         name="Ticket"
@@ -98,7 +101,7 @@ function AppNavigator() {
         }}
       />
 
-      <Drawer.Screen component={PaymentNavigator} name="Payment" />
+      {/* <Drawer.Screen component={PaymentNavigator} name="Payment" /> */}
       {/* <Drawer.Screen component={TicketNavigator} name="Ticket" /> */}
     </Drawer.Navigator>
   );

@@ -25,8 +25,6 @@ function Order(props) {
   const [selectedSeat, setSelectedSeat] = useState([]);
   const [reservedSeat, setReservedSeat] = useState([]);
 
-  // console.log(selectedSeat, 'booked');
-
   const getSeatBooked = (idSchedule, idMovie, date, time) => {
     const result = axios
       .get(
@@ -66,20 +64,15 @@ function Order(props) {
     setSelectedSeat([]);
   };
 
-  // console.log(movie);
-
-  // console.log(selectedSeat);
   const toPayment = () => {
     selectedSeat.length > 0
       ? props.navigation.navigate('Payment', {
-          screen: 'Payment',
           params: {
             dataOrder: {
               date_booking: date,
               time_booking: schedule.time,
               id_movie: idMovie,
               id_schedule: schedule.idSchedule,
-
               seat: selectedSeat,
             },
             totalPrice: selectedSeat.length * schedule.price,

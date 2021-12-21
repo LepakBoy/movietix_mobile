@@ -115,7 +115,9 @@ function LandingPage(props) {
                 style={styles.titleUpComing}>
                 {item.movie_name}
               </Text>
-              <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
+              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.genre}>
+                {item.category}
+              </Text>
               <TouchableOpacity
                 style={styles.btnDetail}
                 onPress={() => toDetailMovie(item.id_movie)}>
@@ -138,11 +140,20 @@ function LandingPage(props) {
           data={MONTH}
           renderItem={({item}) => (
             <TouchableOpacity
-              style={styles.monthList}
+              style={[
+                styles.monthList,
+                count === item.count ? styles.selectedMonth : null,
+              ]}
               onPress={() => {
                 setCount(item.count);
               }}>
-              <Text style={styles.textMonth}>{item.name}</Text>
+              <Text
+                style={[
+                  [styles.textMonth],
+                  count === item.count ? styles.textWhite : null,
+                ]}>
+                {item.name}
+              </Text>
             </TouchableOpacity>
           )}
           keyExtractor={item => item.name}
@@ -158,7 +169,7 @@ function LandingPage(props) {
                 source={
                   item.image
                     ? {
-                        uri: `${API_BACKEND}/uploads/movie/${item.image}`,
+                        uri: `${API_BACKEND}uploads/movie/${item.image}`,
                       }
                     : require('../../assets/images/mv3.jpg')
                 }
@@ -169,7 +180,9 @@ function LandingPage(props) {
                 style={styles.titleUpComing}>
                 {item.movie_name}
               </Text>
-              <Text style={styles.genre}>Action, Adventure, Sci-Fi</Text>
+              <Text numberOfLines={1} ellipsizeMode="tail" style={styles.genre}>
+                {item.category}
+              </Text>
               {/* <TouchableOpacity
                 style={styles.btnDetail}
                 onPress={toDetailMovie}>

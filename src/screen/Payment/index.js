@@ -15,41 +15,30 @@ import Footer from '../../components/Footer';
 import axios from '../../utils/axios';
 
 function Payment(props) {
-  // const [totalPrice, setTotalPrice] = useState(0);
-  // const [seat, setSeat] = useState([]);
-  // const [idMovie, setIdMovie] = useState('');
-  // const [idSchedule, setIdSchedule] = useState('');
-  // const [time, setTime] = useState('initialState');
-  // const [date, setDate] = useState('');
-
   const user = useSelector(state => state.user.user);
   const fullName = `${user.first_name} ${user.last_name}`;
   const [total, setTotal] = useState(0);
-  // console.log(user, fullName);
   const [dataOrder, setDataOrder] = useState({});
   useEffect(() => {
-    setDataOrder(props.route.params.dataOrder);
-    setTotal(props.route.params.totalPrice);
-  }, [props.route.params]);
+    console.log(props.route.params.params.totalPrice);
+    setDataOrder(props.route.params.params.dataOrder);
+    setTotal(props.route.params.params.totalPrice);
+  }, []);
 
   const handleBooking = async () => {
     try {
       const res = await axios.post('/booking', dataOrder);
-      console.log(res);
-      alert('awi');
+      console.log(res, 'sukse');
+      alert('Success booking');
       props.navigation.navigate('Ticket', {
         params: {
-          dataOrder: dataOrder,
-          movieName: props.route.params.movieName,
-          totalPrice: props.route.params.totalPrice,
+          idTicket: res.data.data.result.id_booking,
         },
       });
     } catch (err) {
       console.log(err);
     }
   };
-
-  // console.log(dataOrder, 'dataorder');
 
   return (
     <>

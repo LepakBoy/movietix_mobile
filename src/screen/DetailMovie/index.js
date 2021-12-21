@@ -10,6 +10,7 @@ import DatePicker from 'react-native-date-picker';
 import {Picker} from '@react-native-picker/picker';
 import axios from '../../utils/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {API_BACKEND} from '@env';
 
 function DetailMovie(props) {
   const [date, setDate] = useState(new Date(Date.now()));
@@ -94,7 +95,7 @@ function DetailMovie(props) {
               source={
                 movie.image
                   ? {
-                      uri: `http://192.168.100.4:3000/uploads/movie/${movie.image}`,
+                      uri: `${API_BACKEND}uploads/movie/${movie.image}`,
                     }
                   : require('../../assets/images/default.jpg')
               }
@@ -190,7 +191,13 @@ function DetailMovie(props) {
                             price: item.price,
                           })
                         }
-                        style={s.time}>
+                        style={[
+                          s.time,
+                          item.id_schedule === scheduleSelected.idSchedule &&
+                          list === scheduleSelected.time
+                            ? s.selectedTime
+                            : null,
+                        ]}>
                         {list}
                       </Text>
                     ))}

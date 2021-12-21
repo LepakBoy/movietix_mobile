@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {getUser} from '../stores/action/user';
+import {getUser, updateUser} from '../stores/action/user';
 import s from '../screen/Profile/style';
+import {API_BACKEND} from '@env';
 
 import {
   ScrollView,
@@ -51,7 +52,7 @@ function ProfileSettings(props) {
 
   function changeData() {
     formData.first_name !== '' || formData.last_name !== ''
-      ? axios.patch('/user/update-profile', formData).then(res => {
+      ? dispatch(updateUser(formData)).then(res => {
           alert('success update data');
           dispatch(getUser(user.id_user));
           setFormData({first_name: '', last_name: ''});
@@ -82,7 +83,7 @@ function ProfileSettings(props) {
               style={s.imageUser}
               source={
                 user.image
-                  ? `http://192.168.100.4:3000/uploads/movie/${user.image}`
+                  ? `${API_BACKEND}uploads/movie/${user.image}`
                   : require('../assets/images/default.jpg')
               }
             />

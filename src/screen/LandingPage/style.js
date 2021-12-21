@@ -24,6 +24,10 @@ export default StyleSheet.create({
     width: 300,
     height: 300,
   },
+  selectedMonth: {
+    backgroundColor: '#5f2eea',
+    color: 'white',
+  },
   showingHeader: {
     marginTop: 30,
     paddingVertical: 12,
@@ -81,6 +85,9 @@ export default StyleSheet.create({
     color: '#5F2EEA',
     borderWidth: 1,
     borderColor: '#5F2EEA',
+  },
+  textWhite: {
+    color: 'white',
   },
   textMonth: {
     color: '#5F2EEA',

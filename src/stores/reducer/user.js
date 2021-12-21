@@ -29,6 +29,29 @@ const user = (state = initalState, action) => {
         isError: true,
       };
     }
+    case 'UPDATEPROFILE_PENDING': {
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+        msg: '',
+      };
+    }
+    case 'UPDATEPROFILE_FULFILLED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        // user: action.payload.data.data[0],
+      };
+    }
+    case 'UPDATEPROFILE_REJECTED': {
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    }
     default: {
       return state;
     }

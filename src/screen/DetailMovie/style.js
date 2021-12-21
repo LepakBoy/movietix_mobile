@@ -114,6 +114,10 @@ export default StyleSheet.create({
     color: '#AAAAAA',
     fontSize: 16,
   },
+  selectedTime: {
+    color: '#5f2eea',
+    fontWeight: '600',
+  },
   listTime: {
     marginTop: 36,
     flexDirection: 'row',
