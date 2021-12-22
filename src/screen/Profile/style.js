@@ -21,11 +21,11 @@ export default StyleSheet.create({
   badgesArea: {
     padding: 22,
     backgroundColor: 'white',
-    height: 250,
+    height: 270,
     borderRadius: 8,
   },
   imageArea: {
-    marginTop: 22,
+    marginTop: 16,
     alignItems: 'center',
   },
   imageUser: {
@@ -35,7 +35,7 @@ export default StyleSheet.create({
     // overflow: 'hidden',
   },
   name: {
-    marginTop: 22,
+    marginTop: 18,
     textAlign: 'center',
     color: '#14142B',
     fontSize: 20,
@@ -112,5 +112,21 @@ export default StyleSheet.create({
     marginTop: 8,
     width: 72,
     resizeMode: 'stretch',
+  },
+  btnImage: {
+    marginTop: 12,
+    backgroundColor: '#5F2EEA',
+    padding: 4,
+    borderRadius: 4,
+  },
+  textWhite: {
+    color: 'white',
+  },
+  actionSheet: {
+    height: 180,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 22,
+    paddingHorizontal: 22,
   },
 });

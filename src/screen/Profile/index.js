@@ -14,7 +14,6 @@ function Profile({navigation}) {
   const [dataHistory, setDataHistory] = useState([]);
   const user = useSelector(state => state.user.user);
 
-  console.log(navigation, 'props');
   const getHistory = async id => {
     try {
       const res = await axios.get(`/booking/user/${id}`);
@@ -26,7 +25,7 @@ function Profile({navigation}) {
 
   useEffect(() => {
     getHistory(user.id_user);
-  }, [user.id_user]);
+  }, []);
   return (
     <>
       <View style={s.tabArea}>

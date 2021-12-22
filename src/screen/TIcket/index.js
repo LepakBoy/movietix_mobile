@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import s from './style';
 import axios from '../../utils/axios';
-
+import QRCode from 'react-native-qrcode-svg';
+import {API_BACKEND} from '@env';
 import {ScrollView, View, Text} from 'react-native';
 
 import Footer from '../../components/Footer';
@@ -9,8 +10,6 @@ import {cos} from 'react-native-reanimated';
 
 function Ticket(props) {
   const [dataOrder, setDataOrder] = useState({});
-
-  // endpoint status-ticket : /booking/ticket-status/${id} => dataOrder.id_booking
 
   async function getTicket(id) {
     try {
@@ -26,7 +25,11 @@ function Ticket(props) {
     <ScrollView>
       <View style={s.wrapper}>
         <View style={s.barcodeArea}>
-          <View style={s.barcode} />
+          {/* <View style={s.barcode} /> */}
+          <QRCode
+            value={`${API_BACKEND}booking/ticket/${dataOrder.id_booking}`}
+            size={200}
+          />
         </View>
 
         <View style={s.ticketInfo}>

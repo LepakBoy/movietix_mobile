@@ -1,7 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef, createRef} from 'react';
 import {getUser, updateUser} from '../stores/action/user';
 import s from '../screen/Profile/style';
 import {API_BACKEND} from '@env';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import ActionSheet from 'react-native-actions-sheet';
+import Icon from 'react-native-vector-icons/Feather';
 
 import {
   ScrollView,
@@ -10,15 +13,19 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  PermissionsAndroid,
 } from 'react-native';
 
 import Footer from './Footer';
 import {useSelector, useDispatch} from 'react-redux';
 import axios from '../utils/axios';
 
+const actionSheetRef = createRef();
+
 function ProfileSettings(props) {
+  let actionSheet;
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user.user);
+  const {user} = useSelector(state => state.user);
   const [newPass, setNewPass] = useState({password: '', conPassword: ''});
 
   const [dataUser, setDataUser] = useState({
@@ -39,7 +46,7 @@ function ProfileSettings(props) {
   const changePass = (text, name) => {
     setNewPass({...newPass, [name]: text});
   };
-
+  console.log(user, 'userrr');
   useEffect(() => {
     dispatch(getUser(user.id_user)).then(res => {
       setDataUser({
@@ -73,6 +80,82 @@ function ProfileSettings(props) {
     }
   };
 
+  const handleTakeCamera = async () => {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      {
+        title: 'App Camera Permission',
+        message: 'App needs access to your camera ',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('Camera permission given');
+      try {
+        const result = await launchCamera();
+        if (result.didCancel) {
+        } else {
+          const setData = {
+            user_image: {
+              uri: result.assets[0].uri,
+              name: result.assets[0].fileName,
+              type: result.assets[0].type,
+            },
+          };
+          const formData = new FormData();
+          for (const data in setData) {
+            formData.append(data, setData[data]);
+          }
+          await axios
+            .patch('/user/change-photo', formData)
+            .then(res => {
+              console.log(res, ':resss');
+              dispatch(getUser(user.id_user));
+            })
+            .catch(err => {
+              console.log(err.response, 'error then');
+            });
+        }
+      } catch (error) {
+        console.log(error, 'error kamera');
+      }
+    } else {
+      console.log('Camera permission denied');
+    }
+  };
+
+  const handleChooseGallery = async () => {
+    try {
+      const result = await launchImageLibrary();
+      const setData = {
+        user_image: {
+          uri: result.assets[0].uri,
+          name: result.assets[0].fileName,
+          type: result.assets[0].type,
+        },
+      };
+      console.log('SUBMIT IMAGE', setData);
+
+      const formData = new FormData();
+      for (const data in setData) {
+        formData.append(data, setData[data]);
+      }
+      console.log('satu');
+      await axios
+        .patch('/user/change-photo', formData)
+        .then(res => {
+          console.log(res, ':resss');
+          dispatch(getUser(user.id_user));
+        })
+        .catch(err => {
+          console.log(err, 'error then');
+        });
+      console.log('dua');
+    } catch (error) {}
+  };
+
   return (
     <ScrollView>
       <View style={s.wrapper}>
@@ -82,11 +165,66 @@ function ProfileSettings(props) {
             <Image
               style={s.imageUser}
               source={
-                user.image
-                  ? `${API_BACKEND}uploads/movie/${user.image}`
+                user.user_image
+                  ? {uri: `${API_BACKEND}uploads/user/${user.user_image}`}
                   : require('../assets/images/default.jpg')
               }
             />
+
+            <TouchableOpacity
+              onPress={() => actionSheetRef.current?.setModalVisible()}
+              style={s.btnImage}>
+              <Text style={s.textWhite}>Choose image</Text>
+            </TouchableOpacity>
+            <ActionSheet ref={actionSheetRef}>
+              <View style={[s.actionSheet, {marginHorizontal: 2}]}>
+                <TouchableOpacity
+                  onPress={handleTakeCamera}
+                  style={{
+                    width: '50%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}>
+                  <View
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      flexDirection: 'row',
+                    }}>
+                    <Icon name="camera" size={24} color="#000" />
+                  </View>
+                  <View>
+                    <Text style={{textAlign: 'center', marginTop: 22}}>
+                      Take a photo
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+
+                <View
+                  style={{
+                    marginHorizontal: 2,
+                    width: '50%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}>
+                  <TouchableOpacity onPress={handleChooseGallery}>
+                    <View
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        flexDirection: 'row',
+                      }}>
+                      <Icon name="camera" size={24} color="#000" />
+                    </View>
+                    <View>
+                      <Text style={{textAlign: 'center', marginTop: 22}}>
+                        Choose from gallery
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </ActionSheet>
           </View>
           <Text style={s.name}>{fullName}</Text>
         </View>
@@ -109,11 +247,7 @@ function ProfileSettings(props) {
           />
           <Text style={[s.lableContent, {marginTop: 28}]}>Email</Text>
           <Text style={{marginTop: 12}}>{user.email}</Text>
-          {/* <TextInput
-            style={s.input}
-            placeholder="Enter your email"
-            defaultValue={user.email}
-          /> */}
+
           <TouchableOpacity onPress={changeData} style={s.btnChanges}>
             <Text style={s.textBtn}>Update Profile</Text>
           </TouchableOpacity>
