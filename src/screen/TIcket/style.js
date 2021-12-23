@@ -94,4 +94,17 @@ export default StyleSheet.create({
     width: 72,
     resizeMode: 'stretch',
   },
+  btnDone: {
+    marginTop: 28,
+    backgroundColor: '#5f2eea',
+    padding: 12,
+    borderRadius: 6,
+    justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  textWhite: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '500',
+  },
 });

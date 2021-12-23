@@ -111,7 +111,7 @@ function ProfileSettings(props) {
           await axios
             .patch('/user/change-photo', formData)
             .then(res => {
-              console.log(res, ':resss');
+              alert('Success update image');
               dispatch(getUser(user.id_user));
             })
             .catch(err => {
@@ -142,17 +142,16 @@ function ProfileSettings(props) {
       for (const data in setData) {
         formData.append(data, setData[data]);
       }
-      console.log('satu');
+
       await axios
         .patch('/user/change-photo', formData)
         .then(res => {
-          console.log(res, ':resss');
+          alert('Success update image');
           dispatch(getUser(user.id_user));
         })
         .catch(err => {
           console.log(err, 'error then');
         });
-      console.log('dua');
     } catch (error) {}
   };
 

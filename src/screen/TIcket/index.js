@@ -3,7 +3,7 @@ import s from './style';
 import axios from '../../utils/axios';
 import QRCode from 'react-native-qrcode-svg';
 import {API_BACKEND} from '@env';
-import {ScrollView, View, Text} from 'react-native';
+import {ScrollView, View, Text, TouchableOpacity} from 'react-native';
 
 import Footer from '../../components/Footer';
 import {cos} from 'react-native-reanimated';
@@ -21,6 +21,11 @@ function Ticket(props) {
   useEffect(() => {
     getTicket(props.route.params.params.idTicket);
   }, [props.route.params.params]);
+
+  const toProfile = () => {
+    props.navigation.navigate('Profile');
+  };
+
   return (
     <ScrollView>
       <View style={s.wrapper}>
@@ -63,6 +68,9 @@ function Ticket(props) {
               <Text
                 style={s.textTotal}>{`Rp. ${dataOrder.payment_total}`}</Text>
             </View>
+            <TouchableOpacity style={s.btnDone} onPress={toProfile}>
+              <Text style={s.textWhite}>Done</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

@@ -19,6 +19,9 @@ export default StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
   },
+  active: {
+    borderColor: 'blue',
+  },
   subLabel: {
     color: '#000000',
     fontSize: 16,

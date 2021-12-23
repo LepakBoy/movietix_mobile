@@ -9,26 +9,32 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Button,
 } from 'react-native';
 
 import Footer from '../../components/Footer';
 import axios from '../../utils/axios';
 
 function Payment(props) {
+  const [payment, setPayment] = useState('');
   const user = useSelector(state => state.user.user);
   const fullName = `${user.first_name} ${user.last_name}`;
   const [total, setTotal] = useState(0);
   const [dataOrder, setDataOrder] = useState({});
+
   useEffect(() => {
-    console.log(props.route.params.params.totalPrice);
     setDataOrder(props.route.params.params.dataOrder);
     setTotal(props.route.params.params.totalPrice);
   }, []);
 
   const handleBooking = async () => {
     try {
+      if (payment === '') {
+        alert('Please choose payment method');
+        return;
+      }
       const res = await axios.post('/booking', dataOrder);
-      console.log(res, 'sukse');
+
       alert('Success booking');
       props.navigation.navigate('Ticket', {
         params: {
@@ -39,6 +45,8 @@ function Payment(props) {
       console.log(err);
     }
   };
+
+  console.log(payment);
 
   return (
     <>
@@ -51,42 +59,54 @@ function Payment(props) {
         <View style={s.wrapper}>
           <Text style={s.label}>Payment Method</Text>
           <View style={s.paymentContent}>
-            <View style={s.cardMethod}>
+            <TouchableOpacity
+              style={[s.cardMethod, payment === 'dana' ? s.active : null]}
+              onPress={() => setPayment('dana')}>
               <Image
                 style={s.imgCard}
                 source={require('../../assets/images/dana.png')}
               />
-            </View>
-            <View style={s.cardMethod}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setPayment('gpay')}
+              style={[s.cardMethod, payment === 'gpay' ? s.active : null]}>
               <Image
                 style={s.imgCard}
                 source={require('../../assets/images/google-pay.png')}
               />
-            </View>
-            <View style={s.cardMethod}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setPayment('paypal')}
+              style={[s.cardMethod, payment === 'paypal' ? s.active : null]}>
               <Image
                 style={s.imgCard}
                 source={require('../../assets/images/paypal.png')}
               />
-            </View>
-            <View style={s.cardMethod}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setPayment('bca')}
+              style={[s.cardMethod, payment === 'bca' ? s.active : null]}>
               <Image
                 style={s.imgCard}
                 source={require('../../assets/images/bca.png')}
               />
-            </View>
-            <View style={s.cardMethod}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setPayment('gopay')}
+              style={[s.cardMethod, payment === 'gopay' ? s.active : null]}>
               <Image
                 style={s.imgCard}
                 source={require('../../assets/images/gopay.png')}
               />
-            </View>
-            <View style={s.cardMethod}>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setPayment('visa')}
+              style={[s.cardMethod, payment === 'visa' ? s.active : null]}>
               <Image
                 style={s.imgCard}
                 source={require('../../assets/images/visa.png')}
               />
-            </View>
+            </TouchableOpacity>
             <View style={{width: '100%'}}>
               <Text style={s.or}>Or</Text>
               <Text style={[s.or, {fontSize: 16, fontWeight: '600'}]}>

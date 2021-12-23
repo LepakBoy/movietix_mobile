@@ -38,11 +38,16 @@ function LandingPage(props) {
   const [count, setCount] = useState('');
   const [movies, setMovies] = useState([]);
   const [upComingList, setUpComingList] = useState([]);
+  const [refresh, setRefresh] = useState(false);
 
   const toDetailMovie = id => {
     props.navigation.navigate('DetailMovie', {
       params: {idMovie: id},
     });
+  };
+
+  const handleRefresh = () => {
+    console.log('refresh');
   };
 
   async function getMovie() {
@@ -161,6 +166,8 @@ function LandingPage(props) {
 
         <FlatList
           horizontal
+          onRefresh={handleRefresh}
+          refreshing={refresh}
           data={upComingList}
           renderItem={({item}) => (
             <View style={styles.cardUpComing}>
