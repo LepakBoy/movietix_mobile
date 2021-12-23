@@ -39,10 +39,6 @@ Fitur - Fitur dalam Project
 
 ![login](https://user-images.githubusercontent.com/42567590/147201091-b6227440-d327-4185-b318-c849165eba5f.PNG)
 
-- Landing Page
-
-![landing](https://user-images.githu![order](https://user-images.githubusercontent.com/42567590/147200775-a59c86db-1ccb-4ac3-927f-25a874750970.PNG)
-
 - Order Page
 
 ![order](https://user-images.githubusercontent.com/42567590/147200770-635fd4c8-d8b4-4b92-8bfa-723994089662.PNG)
