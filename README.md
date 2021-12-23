@@ -32,8 +32,32 @@ Fitur - Fitur dalam Project
 
 - [MovieTix backend](https://github.com/LepakBoy/movieTIx)
 
+
 # Screen Shot
 
+- Login Page
+
+![login](https://user-images.githubusercontent.com/42567590/147201091-b6227440-d327-4185-b318-c849165eba5f.PNG)
+
+- Landing Page
+
+![landing](https://user-images.githu![order](https://user-images.githubusercontent.com/42567590/147200775-a59c86db-1ccb-4ac3-927f-25a874750970.PNG)
+
+- Order Page
+
+![order](https://user-images.githubusercontent.com/42567590/147200770-635fd4c8-d8b4-4b92-8bfa-723994089662.PNG)
+
+- Profile Page
+
+![profile](https://user-images.githubusercontent.com/42567590/147200789-a49c1b7e-09dc-469d-b4e1-054e8ffe0d79.PNG)
+
+- payment Page
+
+![payment](https://user-images.githubusercontent.com/42567590/147200782-4559d87e-c4a5-4f33-be58-58be54640ea9.PNG)
+
+- Ticket
+
+![ticket](https://user-images.githubusercontent.com/42567590/147200792-135a0e3d-65d9-4e2d-82ba-c1b076c1d403.PNG)
 
 
 # Deploy
