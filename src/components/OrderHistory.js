@@ -24,7 +24,7 @@ function OrderHistory(props) {
   };
 
   return (
-    <ScrollView>
+    <View>
       <View style={s.wrapper}>
         {/* looping order list */}
         {data.length > 0 ? (
@@ -70,7 +70,7 @@ function OrderHistory(props) {
         </View> */}
       </View>
       <Footer />
-    </ScrollView>
+    </View>
   );
 }
 

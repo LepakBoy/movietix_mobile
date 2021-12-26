@@ -11,6 +11,7 @@ import DetailMovie from '../screen/DetailMovie';
 import Order from '../screen/Order';
 import Payment from '../screen/Payment';
 import Ticket from '../screen/TIcket';
+import AllMovie from '../screen/AllMovie';
 
 import DrawerContent from '../components/DrawerContent';
 
@@ -20,6 +21,11 @@ function HomeNavigator() {
       <Stack.Screen
         component={LandingPage}
         name="LandingPage"
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        component={AllMovie}
+        name="AllMovie"
         options={{headerShown: false}}
       />
       <Stack.Screen

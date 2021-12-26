@@ -23,6 +23,7 @@ function Login(props) {
         alert('Please fill your data');
       } else {
         const result = await axios.post('/auth/login', form);
+        console.log('oakwoakwokawo');
         await AsyncStorage.setItem('token', result.data.data.token);
         await AsyncStorage.setItem(
           'refreshToken',
@@ -35,6 +36,7 @@ function Login(props) {
       }
     } catch (err) {
       alert(err.response.data.msg);
+      console.log(err);
     }
   };
 

@@ -46,8 +46,8 @@ function LandingPage(props) {
     });
   };
 
-  const handleRefresh = () => {
-    console.log('refresh');
+  const toAllMovie = () => {
+    props.navigation.navigate('AllMovie');
   };
 
   async function getMovie() {
@@ -96,7 +96,6 @@ function LandingPage(props) {
         <View style={{marginTop: 12}}>
           <View style={styles.showingHeader}>
             <Text style={styles.textShowing}>Now Showing</Text>
-            <Text style={styles.textViewAll}>view all</Text>
           </View>
         </View>
         <FlatList
@@ -136,7 +135,9 @@ function LandingPage(props) {
         <View>
           <View style={styles.showingHeader}>
             <Text style={styles.textShowing}>Upcoming Movies</Text>
-            <Text style={styles.textViewAll}>view all</Text>
+            <Text onPress={toAllMovie} style={styles.textViewAll}>
+              view all
+            </Text>
           </View>
         </View>
 
@@ -166,7 +167,6 @@ function LandingPage(props) {
 
         <FlatList
           horizontal
-          onRefresh={handleRefresh}
           refreshing={refresh}
           data={upComingList}
           renderItem={({item}) => (

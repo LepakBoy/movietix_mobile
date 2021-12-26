@@ -2,6 +2,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {API_BACKEND} from '@env';
 
+console.log(API_BACKEND);
+
 const axiosApiIntaces = axios.create({
   baseURL: API_BACKEND,
 });
