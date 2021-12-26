@@ -1,4 +1,5 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {View, Text, StyleSheet} from 'react-native';
 import {
   DrawerContentScrollView,
@@ -6,20 +7,14 @@ import {
   DrawerItemList,
 } from '@react-navigation/drawer';
 
-import {useSelector} from 'react-redux';
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from '../utils/axios';
 
 import Icon from 'react-native-vector-icons/Feather';
 
-class DrawerContent extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      token: '',
-    };
-  }
+function DrawerContent(props) {
+  const user = useSelector(state => state.user.user);
+
   // getToken = async () => {
   //   try {
   //     const token = await AsyncStorage.getItem('token');
@@ -32,16 +27,16 @@ class DrawerContent extends React.Component {
   //   }
   // };
 
-  componentDidMount() {
-    // this.getToken();
-    // console.log(this.token, 'didmount');
-  }
+  // componentDidMount() {
+  // this.getToken();
+  // console.log(this.token, 'didmount');
+  // }
 
-  componentDidUpdate() {
-    // this.token;
-  }
+  // componentDidUpdate() {
+  // this.token;
+  // }
 
-  handleLogout = async () => {
+  const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem('token');
       await axios.post('/auth/logout');
@@ -53,32 +48,33 @@ class DrawerContent extends React.Component {
     alert('Logged out');
   };
 
-  render() {
-    // console.log(this.token, 'state class token');
-    return (
-      <View style={styles.container}>
-        <DrawerContentScrollView {...this.props}>
-          <View style={styles.containerProfile}>
-            <View style={styles.avatar} />
-            <View style={styles.biodata}>
-              <Text style={styles.title}>Anonymous</Text>
-              <Text style={styles.caption}>lepakboy</Text>
-            </View>
+  // console.log(this.token, 'state class token');
+  return (
+    <View style={styles.container}>
+      <DrawerContentScrollView {...props}>
+        <View style={styles.containerProfile}>
+          <View style={styles.avatar} />
+          <View style={styles.biodata}>
+            <Text
+              style={
+                styles.title
+              }>{`${user.first_name} ${user.last_name}`}</Text>
+            <Text style={styles.caption}>Moviegoers</Text>
           </View>
-          <DrawerItemList {...this.props} />
-        </DrawerContentScrollView>
-        <View style={styles.containerSection}>
-          <DrawerItem
-            label="Sign Out"
-            // icon={({color, size}) => (
-            //   <Icon color={color} size={size} name="log-out" />
-            // )}
-            onPress={this.handleLogout}
-          />
         </View>
+        <DrawerItemList {...props} />
+      </DrawerContentScrollView>
+      <View style={styles.containerSection}>
+        <DrawerItem
+          label="Sign Out"
+          // icon={({color, size}) => (
+          //   <Icon color={color} size={size} name="log-out" />
+          // )}
+          onPress={handleLogout}
+        />
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

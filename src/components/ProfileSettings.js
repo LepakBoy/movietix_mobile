@@ -213,7 +213,7 @@ function ProfileSettings(props) {
                         justifyContent: 'center',
                         flexDirection: 'row',
                       }}>
-                      <Icon name="camera" size={24} color="#000" />
+                      <Icon name="image" size={24} color="#000" />
                     </View>
                     <View>
                       <Text style={{textAlign: 'center', marginTop: 22}}>
