@@ -58,4 +58,4 @@ Fitur - Fitur dalam Project
 
 # Deploy
 
--SOON
+- (https://drive.google.com/file/d/1bY-uBr3F2yB9bgtxJ4kt4Rkr7WUVJnGz/view?usp=sharing)
